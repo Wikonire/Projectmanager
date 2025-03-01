@@ -6,6 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/back-manager" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/front-manager" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/.idea/dataSources" />
+      <excludeFolder url="file://$MODULE_DIR$/.vscode" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
