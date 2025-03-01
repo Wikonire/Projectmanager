@@ -4,18 +4,74 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="be12a008-624f-4fc4-8cb9-b6d91a5b9b9d" name="Changes" comment="Remove 'front-manager/' from .gitignore&#10;&#10;The 'front-manager/' directory is no longer ignored, likely to track its changes in version control. This update ensures that relevant files within the directory are included in future commits.">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/79ef3ffd-2936-4833-8f74-397979388b8f.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/79ef3ffd-2936-4833-8f74-397979388b8f/storage_v2/_src_/database/DB_ProjectManager.VcQBFA.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/79ef3ffd-2936-4833-8f74-397979388b8f/storage_v2/_src_/database/DB_ProjectManager.VcQBFA/schema/information_schema.FNRwLQ.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/79ef3ffd-2936-4833-8f74-397979388b8f/storage_v2/_src_/database/DB_ProjectManager.VcQBFA/schema/pg_catalog.0S1ZNQ.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/79ef3ffd-2936-4833-8f74-397979388b8f/storage_v2/_src_/database/DB_ProjectManager.VcQBFA/schema/public.abK9xQ.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projectmanager.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Projectmanager.iml" afterDir="false" />
+    <list default="true" id="be12a008-624f-4fc4-8cb9-b6d91a5b9b9d" name="Changes" comment="Remove `.gitignore` and add IntelliJ IDE configuration files&#10;&#10;The `.gitignore` file was deleted, potentially exposing previously ignored files. Additionally, IntelliJ-specific configuration files and database connection settings for PostgreSQL were introduced, indicating the setup of IntelliJ project and database integration.">
+      <change afterPath="$PROJECT_DIR$/back-manager/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/.prettierrc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/eslint.config.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/nest-cli.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/scripts/CreateDatabase.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/scripts/CreateTables.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/scripts/Insert_Testdata.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/activities/activities.conroller.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/activities/activities.module.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/activities/activities.service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/activities/activity.dto.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/activities/activity.entity.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/app.controller.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/app.controller.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/app.module.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/app.service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/auth/auth.conroller.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/auth/auth.guard.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/auth/auth.module.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/auth/auth.service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/auth/jwt.strategy.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/auth/local.strategy.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/document/document.dto.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/document/document.entity.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/document/document.repository.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/document/document.service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/document/documents.controller.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/document/documents.module.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/main.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/milestones/milestone.dto.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/milestones/milestone.entity.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/milestones/milestones.controller.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/milestones/milestones.module.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/milestones/milestones.service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/permissions/permissions.guard.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/permissions/permissions.module.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/permissions/roles.decorator.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/permissions/roles.enum.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/phases/phase.entity.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/phases/phases.controller.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/phases/phases.dto.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/phases/phases.module.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/phases/phases.service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/project/project.dto.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/project/project.entity.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/project/project.module.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/project/project.repository.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/project/project.service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/project/projects.controller.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/role/role.controller.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/role/role.entity.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/role/role.repository.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/role/role.service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/role/user-role.entity.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/user/user.dto.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/user/user.entity.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/user/users.controller.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/user/users.module.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/src/user/users.service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/test/app.e2e-spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/test/jest-e2e.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/tsconfig.build.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-manager/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,6 +110,7 @@
   &quot;associatedIndex&quot;: 0
 }</component>
   <component name="ProjectId" id="2tAtr2AgKKqHAFdJ11riG1PDmTo" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -72,7 +129,10 @@
     "nodejs_package_manager_path": "npm",
     "npm.start.executor": "Run",
     "npm.start:dev.executor": "Run",
-    "settings.editor.selected.configurable": "reference.settings.ide.settings.uml",
+    "project.structure.last.edited": "Problems",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
     "ts.external.directory.path": "C:\\Users\\niwid\\IdeaProjects\\Projectmanager\\back-manager\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   },
@@ -146,7 +206,8 @@
       <workItem from="1740486940095" duration="16540000" />
       <workItem from="1740511674680" duration="3016000" />
       <workItem from="1740829535984" duration="1040000" />
-      <workItem from="1740830604280" duration="1236000" />
+      <workItem from="1740830604280" duration="1544000" />
+      <workItem from="1740832176892" duration="51000" />
     </task>
     <task id="LOCAL-00001" summary="Initialize NestJS backend application structure&#10;&#10;Set up a basic NestJS application with key components including the AppModule, controller, and service. Added configuration files, scripts, and testing setup for unit and e2e tests. Included a `.gitignore` and package management files to define project dependencies.">
       <option name="closed" value="true" />
@@ -212,7 +273,15 @@
       <option name="project" value="LOCAL" />
       <updated>1740831018324</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Remove `.gitignore` and add IntelliJ IDE configuration files&#10;&#10;The `.gitignore` file was deleted, potentially exposing previously ignored files. Additionally, IntelliJ-specific configuration files and database connection settings for PostgreSQL were introduced, indicating the setup of IntelliJ project and database integration.">
+      <option name="closed" value="true" />
+      <created>1740831914019</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1740831914019</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -269,6 +338,9 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/back-manager" />
+    </ignored-roots>
     <MESSAGE value="Initialize NestJS backend application structure&#10;&#10;Set up a basic NestJS application with key components including the AppModule, controller, and service. Added configuration files, scripts, and testing setup for unit and e2e tests. Included a `.gitignore` and package management files to define project dependencies." />
     <MESSAGE value="Configure database integration and environment variables&#10;&#10;Integrated PostgreSQL using TypeORM and added dynamic environment configuration support with `.env` files. Included connection testing script and updated dependencies to support database operations. Updated `.gitignore` to exclude sensitive environment files." />
     <MESSAGE value="Integrate PostgreSQL and create project schema.&#10;&#10;Added PostgreSQL connection using TypeORM with async configuration and .env support. Implemented initial database schema with tables for projects, phases, activities, milestones, documents, employees, and associated relations. Verified connection success with a test script. Updated `.gitignore` and dependencies in `package.json`." />
@@ -279,7 +351,8 @@
     <MESSAGE value="Remove compiled files and build artifacts from repository&#10;&#10;Deleted compiled JavaScript files, type declaration files, and build-related artifacts from the dist directory. Updated the repository to no longer track build outputs and configuration fragments to ensure a cleaner codebase and reduce unnecessary repository clutter.&quot;" />
     <MESSAGE value="Refactor remove method to add explicit type annotation.&#10;&#10;Added explicit type annotation for the 'activity' variable in the remove method to improve code clarity and type safety. This ensures better readability and adherence to TypeScript best practices." />
     <MESSAGE value="Remove 'front-manager/' from .gitignore&#10;&#10;The 'front-manager/' directory is no longer ignored, likely to track its changes in version control. This update ensures that relevant files within the directory are included in future commits." />
-    <option name="LAST_COMMIT_MESSAGE" value="Remove 'front-manager/' from .gitignore&#10;&#10;The 'front-manager/' directory is no longer ignored, likely to track its changes in version control. This update ensures that relevant files within the directory are included in future commits." />
+    <MESSAGE value="Remove `.gitignore` and add IntelliJ IDE configuration files&#10;&#10;The `.gitignore` file was deleted, potentially exposing previously ignored files. Additionally, IntelliJ-specific configuration files and database connection settings for PostgreSQL were introduced, indicating the setup of IntelliJ project and database integration." />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove `.gitignore` and add IntelliJ IDE configuration files&#10;&#10;The `.gitignore` file was deleted, potentially exposing previously ignored files. Additionally, IntelliJ-specific configuration files and database connection settings for PostgreSQL were introduced, indicating the setup of IntelliJ project and database integration." />
     <option name="NON_MODAL_COMMIT_POSTPONE_SLOW_CHECKS" value="false" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
