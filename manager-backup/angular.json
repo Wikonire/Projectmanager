@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "front-manager": {
+    "Front-Manager": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -62,10 +62,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "front-manager:build:production"
+              "buildTarget": "Front-Manager:build:production"
             },
             "development": {
-              "buildTarget": "front-manager:build:development"
+              "buildTarget": "Front-Manager:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -73,7 +73,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "front-manager:build"
+            "buildTarget": "Front-Manager:build"
           }
         },
         "test": {
@@ -97,5 +97,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "eea4e26c-0b26-45ac-b8f9-29020af9801c"
   }
 }
