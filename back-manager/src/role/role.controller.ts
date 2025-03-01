@@ -6,7 +6,7 @@ export class RoleController {
     constructor(private readonly roleService: RoleService) {}
 
     @Get()
-    findAll() {
+    findAll(): Promise<any> {
         return this.roleService.findAll();
     }
 }
