@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="be12a008-624f-4fc4-8cb9-b6d91a5b9b9d" name="Changes" comment="Remove 'front-manager/' from .gitignore&#10;&#10;The 'front-manager/' directory is no longer ignored, likely to track its changes in version control. This update ensures that relevant files within the directory are included in future commits.">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/79ef3ffd-2936-4833-8f74-397979388b8f.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/79ef3ffd-2936-4833-8f74-397979388b8f/storage_v2/_src_/database/DB_ProjectManager.VcQBFA.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/79ef3ffd-2936-4833-8f74-397979388b8f/storage_v2/_src_/database/DB_ProjectManager.VcQBFA/schema/information_schema.FNRwLQ.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/79ef3ffd-2936-4833-8f74-397979388b8f/storage_v2/_src_/database/DB_ProjectManager.VcQBFA/schema/pg_catalog.0S1ZNQ.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/79ef3ffd-2936-4833-8f74-397979388b8f/storage_v2/_src_/database/DB_ProjectManager.VcQBFA/schema/public.abK9xQ.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projectmanager.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Projectmanager.iml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="directory" />
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="SYNC" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Wikonire&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Wikonire/Projectmanager.git&quot;,
+    &quot;accountId&quot;: &quot;f2aa4845-d934-4483-8e36-981eb9ff8192&quot;
+  }
+}</component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="2tAtr2AgKKqHAFdJ11riG1PDmTo" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/niwid/IdeaProjects/Projectmanager",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "npm.start.executor": "Run",
+    "npm.start:dev.executor": "Run",
+    "settings.editor.selected.configurable": "reference.settings.ide.settings.uml",
+    "ts.external.directory.path": "C:\\Users\\niwid\\IdeaProjects\\Projectmanager\\back-manager\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
+    ]
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\niwid\IdeaProjects\Projectmanager" />
+      <recent name="C:\Users\niwid\IdeaProjects\Projectmanager\back-manager\src\permissions" />
+      <recent name="C:\Users\niwid\IdeaProjects\Projectmanager\back-manager" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\niwid\IdeaProjects\Projectmanager\back-manager\src\security" />
+      <recent name="C:\Users\niwid\IdeaProjects\Projectmanager\back-manager\src\project" />
+      <recent name="C:\Users\niwid\IdeaProjects\Projectmanager\back-manager\src\user" />
+    </key>
+  </component>
+  <component name="RunManager" selected="npm.start:dev">
+    <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/back-manager/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="start:dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/back-manager/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start:dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.start:dev" />
+        <item itemvalue="npm.start" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-125ca727e0f0-intellij.indexing.shared.core-IU-243.23654.189" />
+        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-IU-243.23654.189" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="be12a008-624f-4fc4-8cb9-b6d91a5b9b9d" name="Changes" comment="" />
+      <created>1739806902992</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1739806902992</updated>
+      <workItem from="1739806904087" duration="1378000" />
+      <workItem from="1739810715369" duration="4421000" />
+      <workItem from="1739985642186" duration="4801000" />
+      <workItem from="1740159425687" duration="2003000" />
+      <workItem from="1740486819987" duration="106000" />
+      <workItem from="1740486940095" duration="16540000" />
+      <workItem from="1740511674680" duration="3016000" />
+      <workItem from="1740829535984" duration="1040000" />
+      <workItem from="1740830604280" duration="1236000" />
+    </task>
+    <task id="LOCAL-00001" summary="Initialize NestJS backend application structure&#10;&#10;Set up a basic NestJS application with key components including the AppModule, controller, and service. Added configuration files, scripts, and testing setup for unit and e2e tests. Included a `.gitignore` and package management files to define project dependencies.">
+      <option name="closed" value="true" />
+      <created>1739807935219</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1739807935219</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Integrate PostgreSQL and create project schema.&#10;&#10;Added PostgreSQL connection using TypeORM with async configuration and .env support. Implemented initial database schema with tables for projects, phases, activities, milestones, documents, employees, and associated relations. Verified connection success with a test script. Updated `.gitignore` and dependencies in `package.json`.">
+      <option name="closed" value="true" />
+      <created>1740487109658</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1740487109658</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Add core modules for user, project, role, and document management&#10;&#10;Introduce key modules such as Users, Projects, Roles, and Documents with corresponding entities, DTOs, controllers, and services to handle CRUD operations. Additionally, implemented role-based access control (RBAC) using decorators, guards, and permissions handling, as well as initialized test data script for PostgreSQL.">
+      <option name="closed" value="true" />
+      <created>1740510109589</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1740510109589</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Remove .idea/.gitignore from the repository&#10;&#10;The .gitignore file under .idea is deleted to ensure irrelevant IDE-specific files are not tracked or mismanaged. This supports keeping the repository cleaner and more uniform across different development environments.">
+      <option name="closed" value="true" />
+      <created>1740830675995</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1740830675995</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Create SQL script for database initialization&#10;&#10;Add a new SQL script to initialize the database structure.">
+      <option name="closed" value="true" />
+      <created>1740830706718</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1740830706718</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Remove compiled files and build artifacts from repository&#10;&#10;Deleted compiled JavaScript files, type declaration files, and build-related artifacts from the dist directory. Updated the repository to no longer track build outputs and configuration fragments to ensure a cleaner codebase and reduce unnecessary repository clutter.&quot;">
+      <option name="closed" value="true" />
+      <created>1740830753213</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1740830753213</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Refactor remove method to add explicit type annotation.&#10;&#10;Added explicit type annotation for the 'activity' variable in the remove method to improve code clarity and type safety. This ensures better readability and adherence to TypeScript best practices.">
+      <option name="closed" value="true" />
+      <created>1740830779819</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1740830779819</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Remove 'front-manager/' from .gitignore&#10;&#10;The 'front-manager/' directory is no longer ignored, likely to track its changes in version control. This update ensures that relevant files within the directory are included in future commits.">
+      <option name="closed" value="true" />
+      <created>1740831018324</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1740831018324</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="master" />
+                </option>
+              </RecentGroup>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="origin/master" />
+                </option>
+              </RecentGroup>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="HEAD" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
+    <MESSAGE value="Initialize NestJS backend application structure&#10;&#10;Set up a basic NestJS application with key components including the AppModule, controller, and service. Added configuration files, scripts, and testing setup for unit and e2e tests. Included a `.gitignore` and package management files to define project dependencies." />
+    <MESSAGE value="Configure database integration and environment variables&#10;&#10;Integrated PostgreSQL using TypeORM and added dynamic environment configuration support with `.env` files. Included connection testing script and updated dependencies to support database operations. Updated `.gitignore` to exclude sensitive environment files." />
+    <MESSAGE value="Integrate PostgreSQL and create project schema.&#10;&#10;Added PostgreSQL connection using TypeORM with async configuration and .env support. Implemented initial database schema with tables for projects, phases, activities, milestones, documents, employees, and associated relations. Verified connection success with a test script. Updated `.gitignore` and dependencies in `package.json`." />
+    <MESSAGE value="Add core modules for user, project, role, and document management&#10;&#10;Introduce key modules such as Users, Projects, Roles, and Documents with corresponding entities, DTOs, controllers, and services to handle CRUD operations. Additionally, implemented role-based access control (RBAC) using decorators, guards, and permissions handling, as well as initialized test data script for PostgreSQL." />
+    <MESSAGE value="Remove generated files, update type annotations, and add SQL script&#10;&#10;This commit removes all unnecessary generated files and directories, such as build outputs and IDE configurations, improving repository cleanliness. It updates type annotations in `activities.service.ts` for better type safety. Additionally, a new `CreateDatabase.sql` script is added to assist with database setup." />
+    <MESSAGE value="Remove .idea/.gitignore from the repository&#10;&#10;The .gitignore file under .idea is deleted to ensure irrelevant IDE-specific files are not tracked or mismanaged. This supports keeping the repository cleaner and more uniform across different development environments." />
+    <MESSAGE value="Create SQL script for database initialization&#10;&#10;Add a new SQL script to initialize the database structure." />
+    <MESSAGE value="Remove compiled files and build artifacts from repository&#10;&#10;Deleted compiled JavaScript files, type declaration files, and build-related artifacts from the dist directory. Updated the repository to no longer track build outputs and configuration fragments to ensure a cleaner codebase and reduce unnecessary repository clutter.&quot;" />
+    <MESSAGE value="Refactor remove method to add explicit type annotation.&#10;&#10;Added explicit type annotation for the 'activity' variable in the remove method to improve code clarity and type safety. This ensures better readability and adherence to TypeScript best practices." />
+    <MESSAGE value="Remove 'front-manager/' from .gitignore&#10;&#10;The 'front-manager/' directory is no longer ignored, likely to track its changes in version control. This update ensures that relevant files within the directory are included in future commits." />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove 'front-manager/' from .gitignore&#10;&#10;The 'front-manager/' directory is no longer ignored, likely to track its changes in version control. This update ensures that relevant files within the directory are included in future commits." />
+    <option name="NON_MODAL_COMMIT_POSTPONE_SLOW_CHECKS" value="false" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
