@@ -1,0 +1,57 @@
+# Node.js spezifisch
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log
+package-lock.json
+
+# Umgebungsdateien
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Betriebssystem spezifisch
+.DS_Store
+Thumbs.db
+*.AppleDouble
+.LSOverride
+
+# IDE und Editor spezifisch
+.idea/
+.vscode/
+*.sublime-*
+*.swp
+*.log
+
+# TypeScript spezifisch
+*.tsbuildinfo
+
+# Build-Ausgabe (Frontend und Backend)
+build/
+dist/
+temp/
+logs/
+
+# Frontend spezifisch (Angular)
+front-manager/node_modules/
+front-manager/dist/
+front-manager/.angular/
+front-manager/package-lock.json
+front-manager/.angular/cache
+
+# Backend spezifisch (NestJS)
+back-manager/node_modules/
+back-manager/dist/
+back-manager/package-lock.json
+
+# Test-Reports
+coverage/
+test-output/
+*.lcov
+
+# Git spezifisch
+.git/
+!.gitignore
+/.idea/
