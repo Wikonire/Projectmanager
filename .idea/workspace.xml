@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="be12a008-624f-4fc4-8cb9-b6d91a5b9b9d" name="Changes" comment="Add a comprehensive README for ProjectManager&#10;&#10;Provides detailed project information, including description, technologies, structure, and setup instructions. This README serves as a foundational documentation for developers and users alike." />
+    <list default="true" id="be12a008-624f-4fc4-8cb9-b6d91a5b9b9d" name="Changes" comment="Update and reorganize .gitignore files&#10;&#10;Replaced `front-manager/.gitignore` with a centralized and comprehensive root-level `.gitignore`. This ensures better consistency, eliminates redundancies, and provides improved coverage for Node.js, environment files, IDE settings, build artifacts, and OS-specific files." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -139,7 +139,7 @@
       <workItem from="1740511674680" duration="3016000" />
       <workItem from="1740829535984" duration="1040000" />
       <workItem from="1740830604280" duration="1544000" />
-      <workItem from="1740832176892" duration="1281000" />
+      <workItem from="1740832176892" duration="1925000" />
     </task>
     <task id="LOCAL-00001" summary="Initialize NestJS backend application structure&#10;&#10;Set up a basic NestJS application with key components including the AppModule, controller, and service. Added configuration files, scripts, and testing setup for unit and e2e tests. Included a `.gitignore` and package management files to define project dependencies.">
       <option name="closed" value="true" />
@@ -261,7 +261,23 @@
       <option name="project" value="LOCAL" />
       <updated>1740833449990</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Add a comprehensive README for ProjectManager&#10;&#10;Provides detailed project information, including description, technologies, structure, and setup instructions. This README serves as a foundational documentation for developers and users alike.">
+      <option name="closed" value="true" />
+      <created>1740834040368</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1740834040368</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Update and reorganize .gitignore files&#10;&#10;Replaced `front-manager/.gitignore` with a centralized and comprehensive root-level `.gitignore`. This ensures better consistency, eliminates redundancies, and provides improved coverage for Node.js, environment files, IDE settings, build artifacts, and OS-specific files.">
+      <option name="closed" value="true" />
+      <created>1740834065819</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1740834065819</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -342,7 +358,8 @@
     <MESSAGE value="Add foundational modules for project management functionality&#10;&#10;Introduced core modules for projects, phases, activities, milestones, and documents in the backend. Each module includes entity definitions, DTOs for data validation, services, and controllers to handle basic CRUD operations. These changes establish the groundwork for managing project-related data and relationships." />
     <MESSAGE value="Add return type annotation to role.controller findAll method&#10;&#10;Updated the findAll method in role.controller to explicitly declare a Promise&lt;any&gt; return type. This enhances code clarity and type safety." />
     <MESSAGE value="Add a comprehensive README for ProjectManager&#10;&#10;Provides detailed project information, including description, technologies, structure, and setup instructions. This README serves as a foundational documentation for developers and users alike." />
-    <option name="LAST_COMMIT_MESSAGE" value="Add a comprehensive README for ProjectManager&#10;&#10;Provides detailed project information, including description, technologies, structure, and setup instructions. This README serves as a foundational documentation for developers and users alike." />
+    <MESSAGE value="Update and reorganize .gitignore files&#10;&#10;Replaced `front-manager/.gitignore` with a centralized and comprehensive root-level `.gitignore`. This ensures better consistency, eliminates redundancies, and provides improved coverage for Node.js, environment files, IDE settings, build artifacts, and OS-specific files." />
+    <option name="LAST_COMMIT_MESSAGE" value="Update and reorganize .gitignore files&#10;&#10;Replaced `front-manager/.gitignore` with a centralized and comprehensive root-level `.gitignore`. This ensures better consistency, eliminates redundancies, and provides improved coverage for Node.js, environment files, IDE settings, build artifacts, and OS-specific files." />
     <option name="NON_MODAL_COMMIT_POSTPONE_SLOW_CHECKS" value="false" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
