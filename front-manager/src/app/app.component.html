@@ -6,6 +6,9 @@
       <a mat-button routerLink="project-overview"><mat-icon>view_list</mat-icon>Projects Overview</a>
       <a mat-button routerLink="account"><mat-icon>account_circle</mat-icon>User Account</a>
       <a mat-button routerLink="user-management"><mat-icon>supervised_user_circle</mat-icon>User Management</a>
+    <mat-menu #menu="matMenu">
+      <a mat-menu-item [routerLink]="['project-details']">Home</a>
+    </mat-menu>
     </mat-toolbar-row>
   </mat-toolbar>
 </header>
