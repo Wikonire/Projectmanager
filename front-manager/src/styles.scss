@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @use '@angular/material' as mat;
+@use '@worktile/gantt/styles/index.scss';
+
 html {
   @include mat.theme((
     color: (
