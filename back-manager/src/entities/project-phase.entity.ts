@@ -1,5 +1,5 @@
 import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
-import {Max, Min} from 'class-validator';
+import {IsNotEmpty, IsString, Max, Min} from 'class-validator';
 import {Project} from './project.entity';
 import {PhaseStatus} from './phase-status.entity';
 
@@ -7,6 +7,9 @@ import {PhaseStatus} from './phase-status.entity';
 export class ProjectPhase {
     @PrimaryGeneratedColumn('uuid')
     id: string;
+
+    @Column({length: 50, nullable: false})
+    title: string;
 
     @ManyToOne(() => Project, {onDelete: 'CASCADE'})
     project: Project;

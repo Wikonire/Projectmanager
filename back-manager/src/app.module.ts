@@ -33,27 +33,11 @@ import {DocumentType} from './entities/document-type.entity';
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
       autoLoadEntities: true,
-      logging: true,
-      synchronize: true,
-      entities: [
-        Project,
-        ProjectStatus,
-        ProjectPriority,
-        ProjectPhase,
-        Activity,
-        Milestone,
-        Document,
-        User,
-        Role,
-        PhaseStatus,
-        DocumentType,
-        DocumentRelation,
-        Employee,
-        EmployeePmFunction,
-        PmFunction,
-        ActivityStatus,
-
-      ]
+      synchronize: false, // Migrations nutzen, nicht automatisch synchronisieren
+      dropSchema: false, // Falls die gesamte DB nicht bei jedem Start gelöscht werden soll
+      logging: ["query", "error"], // Debugging aktivieren
+      entities: [__dirname + "/entities/*.entity{.ts,.js}"],
+      migrations: [__dirname + "/migrations/*.ts"],
     }),
     ProjectModule,
 

@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
+import {Column, Entity, OneToMany, PrimaryGeneratedColumn, CreateDateColumn} from 'typeorm';
 import { DocumentRelation } from './document-relation.entity';
 
 @Entity('document')

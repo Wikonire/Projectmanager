@@ -1,8 +1,9 @@
-import { IsString, IsUUID, IsOptional, IsDate } from 'class-validator';
+import {IsString, IsUUID, IsOptional, IsDate, IsNotEmpty} from 'class-validator';
 
 export class CreatePhaseDto {
     @IsString()
-    name: string;
+    @IsNotEmpty()
+    title: string;
 
     @IsOptional()
     @IsDate()
