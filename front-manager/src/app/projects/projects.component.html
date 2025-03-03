@@ -1,2 +1,7 @@
 <h2>Projects Overview</h2>
 <p>projects works!</p>
+<ng-template *ngIf="projects|async as projectList">
+<mat-list *ngFor="let item of projectList; index as i;">
+    <mat-list-item>{{item.name}}</mat-list-item>
+</mat-list>
+</ng-template>

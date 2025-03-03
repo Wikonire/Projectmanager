@@ -1,4 +1,7 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ProjectOverviewService} from '../../shared/project-overview.service';
+import {IProject} from '../interfaces/project.interface';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-projects',
@@ -6,6 +9,14 @@ import {Component} from '@angular/core';
   styleUrl: './projects.component.scss',
   standalone: false,
 })
-export class ProjectsComponent {
+export class ProjectsComponent implements OnInit {
+
+  public projects: Observable<IProject[]>|undefined = undefined;
+
+  constructor(private readonly projectsService: ProjectOverviewService) {
+  }
+    ngOnInit(): void {
+         //this.projects = this.projectsService.getProjects();
+  }
 
 }

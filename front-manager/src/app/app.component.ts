@@ -13,11 +13,26 @@ import {DhtmlxGanttComponent} from './dhtmlx-gantt/dhtmlx-gantt.component';
 import {HighlightChartComponent} from './highlight-chart/highlight-chart.component';
 import {AngularGanttComponent} from './angular-gantt/angular-gantt.component';
 import {ProjectDetailComponent} from './project-detail/project-detail.component';
+import {ProjectsModule} from './projects/projects.module';
+import {ProjectDetailModule} from './project-detail/project-detail.module';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, NgForOf, RouterOutlet, MatMenuModule, MatToolbarModule, MatButtonModule, MatIconModule, RouterLink, NgOptimizedImage],
+  imports: [
+    CommonModule,
+    NgForOf,
+    RouterOutlet,
+    MatMenuModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    RouterLink,
+    NgOptimizedImage,
+    ProjectsModule,
+    ProjectDetailModule
+
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

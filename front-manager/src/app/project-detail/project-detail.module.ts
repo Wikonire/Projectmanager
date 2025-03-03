@@ -2,7 +2,8 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ProjectDetailComponent} from './project-detail.component';
-import {DhtmlxGanttModule} from '../dhtmlx-gantt/dhtmlx-gantt.module';
+import {MatFormField, MatFormFieldModule, MatLabel} from '@angular/material/form-field';
+import {MatOption, MatSelect, MatSelectModule} from '@angular/material/select';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import {DhtmlxGanttModule} from '../dhtmlx-gantt/dhtmlx-gantt.module';
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
-      DhtmlxGanttModule
+    MatFormFieldModule,
+    MatSelectModule,
   ],
   exports: [ProjectDetailComponent],
 })

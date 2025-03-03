@@ -2,8 +2,13 @@
 <mat-form-field>
   <mat-label>Favorite food</mat-label>
   <mat-select>
-    @for (project of projects; track food) {
-      <mat-option [value]="project.value">{{project.viewValue}}</mat-option>
+    @for (project of [
+      {value: 'skdk'},
+      {value: 'alksd'},
+      {value: 'sdf'},
+      {value: 'asdf'},
+    ]; track project.value) {
+      <mat-option [value]="project.value">{{project.value}}</mat-option>
     }
   </mat-select>
 </mat-form-field>

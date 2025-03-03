@@ -5,11 +5,12 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "watch": "ng build --watch --configuration development",
+    "watch": "ng build --watch --configuration development ",
     "test": "ng test"
   },
   "private": true,
   "dependencies": {
+    "@angular-devkit/core": "^19.2.0",
     "@angular/animations": "^19.2.0",
     "@angular/cdk": "~19.2.1",
     "@angular/common": "^19.2.0",
