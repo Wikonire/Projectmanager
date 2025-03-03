@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { PermissionsGuard } from './permissions.guard';
 import { APP_GUARD } from '@nestjs/core';
+import {JwtModule} from '@nestjs/jwt';
 
 @Module({
     providers: [
@@ -9,5 +10,6 @@ import { APP_GUARD } from '@nestjs/core';
             useClass: PermissionsGuard,
         },
     ],
+    imports: [JwtModule],
 })
 export class PermissionsModule {}

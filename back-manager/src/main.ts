@@ -1,39 +1,26 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import {Client} from 'pg';
-
+import {ValidationPipe} from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.enableCors();
-  await app.listen(process.env.PORT ?? 5432);
+  app.useGlobalPipes(new ValidationPipe({
+    whitelist: true, // Filtert unbekannte Felder aus
+    forbidNonWhitelisted: true, // Gibt Fehler bei unbekannten Feldern
+    transform: true, // Automatische Typumwandlung anhand der DTOs
+  }));
 
 
-}
-
-
-async function testDatabaseConnection() {
-  const client = new Client({
-    host: 'localhost',
-    port: 5432,
-    user: 'postgres',
-    password: 'SeraphinaPeckula1991$',
-    database: 'DB_ProjectManager',
-
+  app.enableCors({
+    origin: 'http://localhost:4200',
+    credentials: true,
   });
 
-  try {
-    await client.connect();
-    console.log('✅ Verbindung erfolgreich hergestellt!');
-    const res = await client.query('SELECT NOW()');
-    console.log('📅 Aktueller Zeitstempel der Datenbank:', res.rows[0].now);
-  } catch (err) {
-    console.error('❌ Verbindungsfehler:', err.message);
-  } finally {
-    await client.end();
-  }
+  const port = process.env.PORT ?? 3000;
+  await app.listen(port);
+  console.log(`🚀 Server läuft auf http://localhost:${port}`);
 }
 
-testDatabaseConnection();
-
 bootstrap();
+
+
