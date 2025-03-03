@@ -1,19 +1,22 @@
-import { Component } from '@angular/core';
-import {GanttItem, NgxGanttComponent, NgxGanttTableColumnComponent, NgxGanttTableComponent} from '@worktile/gantt';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder} from '@angular/forms';
+import {getProjectStyleFile} from '@angular/cdk/schematics';
 
 @Component({
   selector: 'app-project-detail',
-  imports: [
-    NgxGanttTableColumnComponent,
-    NgxGanttTableComponent,
-    NgxGanttComponent
-  ],
+  styleUrl: './project-detail.component.scss',
+  standalone: false,
   templateUrl: './project-detail.component.html',
-  styleUrl: './project-detail.component.scss'
 })
-export class ProjectDetailComponent {
-  items: GanttItem[] = [
-    { id: '000000', title: 'Task 0', start: 1627729997, end: 1628421197 },
-    { id: '000001', title: 'Task 1', start: 1617361997, end: 1625483597 }
-  ];
+export class ProjectDetailComponent implements OnInit {
+
+
+  constructor(public fb: FormBuilder) {
+  }
+
+  ngOnInit() {
+
+  }
+
+  protected readonly getProjectStyleFile = getProjectStyleFile;
 }

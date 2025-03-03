@@ -1,1 +1,10 @@
+<h2>Project Details</h2>
+<mat-form-field>
+  <mat-label>Favorite food</mat-label>
+  <mat-select>
+    @for (project of projects; track food) {
+      <mat-option [value]="project.value">{{project.viewValue}}</mat-option>
+    }
+  </mat-select>
+</mat-form-field>
 

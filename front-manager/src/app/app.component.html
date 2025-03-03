@@ -1,14 +1,21 @@
 <header class="header" id="header">
   <mat-toolbar color="primary" role="heading">
-    <mat-toolbar-row role="banner"><h1>Project Manager</h1></mat-toolbar-row>
+    <mat-toolbar-row role="banner">
+      <a routerLink="/home" class="logo-link">
+        <img [ngSrc]="'assets/logo/logo-project-manager.svg'" alt="logo" class="logo" width="50" height="50">
+        <h1>Project Manager</h1>
+      </a>
+
+    </mat-toolbar-row>
     <mat-toolbar-row role="navigation">
-      <a mat-button routerLink="home"><mat-icon >home</mat-icon>Home</a>
-      <a mat-button routerLink="project-overview"><mat-icon>view_list</mat-icon>Projects Overview</a>
-      <a mat-button routerLink="account"><mat-icon>account_circle</mat-icon>User Account</a>
-      <a mat-button routerLink="user-management"><mat-icon>supervised_user_circle</mat-icon>User Management</a>
-    <mat-menu #menu="matMenu">
-      <a mat-menu-item [routerLink]="['project-details']">Home</a>
-    </mat-menu>
+      <button mat-button [matMenuTriggerFor]="menu"><mat-icon>menu</mat-icon>Menu</button>
+     <mat-menu #menu="matMenu" role="menu">
+        <a   mat-menu-item *ngFor="let item of links; index as i;" routerLink="{{item.path}}">
+          <mat-icon>{{item.icon}}</mat-icon>
+          {{ item.title }}
+        </a>
+      </mat-menu>
+
     </mat-toolbar-row>
   </mat-toolbar>
 </header>
@@ -18,7 +25,6 @@
 </main>
 <footer role="contentinfo" class="footer" id="footer">
   <p>
-    &copy; 2024 Federal Office of Information Technology, Systems and
-    Telecommunication FOITT
+    &copy; <span id="currentYear"></span> Wikonire. Alle Rechte vorbehalten.
   </p>
 </footer>
