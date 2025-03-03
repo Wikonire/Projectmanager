@@ -23,12 +23,14 @@ dotenv.config({path: './.env'});
 
 export const AppDataSource = new DataSource({
     type: "postgres",
-    host: "localhost",
-    port: 5432,
-    username: "postgres",
-    password: "superuser",
-    database: "DB_ProjectManager",
-   /* entities: [
+    host: process.env.DB_HOST,
+    port: Number(process.env.DB_PORT),
+    username: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_NAME,
+    synchronize: false, // Nutze besser Migrations
+    logging: true,
+    entities: [
         Project,
         ProjectStatus,
         ProjectPriority,
@@ -45,9 +47,8 @@ export const AppDataSource = new DataSource({
         EmployeePmFunction,
         PmFunction,
         ActivityStatus,
-    ],*/
-    logging: true,
-    synchronize: true,
+    ],
+    migrations: ["/src/migrations/**/*.ts"]
 })
 /*
 export const AppDataSource = new DataSource({
