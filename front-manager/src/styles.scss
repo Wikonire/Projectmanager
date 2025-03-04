@@ -1,7 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
+//@use '@angular/material' as mat;
+@use 'themes/themesm3-theme';
 @use '@angular/material' as mat;
-@use 'themes/theme';
+@include mat.core();
+
+// @include mat.system-level-colors(themesm3-theme.$light-theme);
+// @include mat.system-level-typography(themesm3-theme.$light-theme);
 
 
-html, body { height: 100%; }
+
+
+html, body { height: 100%;
+  @include mat.core-theme(themesm3-theme.$light-theme);
+  }
 body { margin: 0; font-family: Roboto, "Arial", sans-serif; }
