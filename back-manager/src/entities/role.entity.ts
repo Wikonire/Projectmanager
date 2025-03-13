@@ -1,10 +1,17 @@
-import {Column, Entity, PrimaryGeneratedColumn} from 'typeorm';
+import {Column, Entity, ManyToMany, PrimaryGeneratedColumn} from 'typeorm';
+import {UserEntity} from './user.entity';
 
-@Entity()
-export class Role {
-    @PrimaryGeneratedColumn('uuid') // UUID wird automatisch generiert
+@Entity('role')
+export class RoleEntity {
+    @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column({ type: 'varchar', length: 50, unique: true }) // Name ist eindeutig und hat eine Maximal-Länge von 50
+    @Column({ type: 'varchar', length: 80, unique: true })
     name: string;
+
+    @Column({ type: 'varchar', length: 250, nullable: true })
+    description: string;
+
+    @ManyToMany(() => UserEntity, (user) => user.roles)
+    users: UserEntity[];
 }

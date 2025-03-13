@@ -3,6 +3,8 @@ import {MigrationInterface, QueryRunner} from "typeorm";
 export class TestData implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
         console.log("Seeding Testdaten...");
+
+        await queryRunner.query(`CREATE UNIQUE INDEX unique_lower_email ON "pm_user" (LOWER(email));`)
         await queryRunner.query(`
         -- Trigger-Funktion, die den progress-Wert in phase aktualisiert
 CREATE OR REPLACE FUNCTION update_phase_progress()
@@ -28,16 +30,18 @@ ON activity
 FOR EACH ROW
 EXECUTE FUNCTION update_phase_progress();
         `)
+        await queryRunner.query(`
+        CREATE EXTENSION IF NOT EXISTS pgcrypto;
+        `)
         // Rollen hinzufügen
         await queryRunner.query(`
-CREATE EXTENSION IF NOT EXISTS pgcrypto;
-            INSERT INTO role (name)
-            VALUES ('Admin'),
-                   ('User*in'),
-                   ('Developer*in'),
-                   ('Viewer*in'),
-                   ('Editor*in'),
-                   ('Cyberpunk Activist*in')
+            INSERT INTO role (name, description)
+            VALUES ('Admin', 'Hat volle Kontrolle über das System. Kann Benutzer*innen verwalten, Einstellungen ändern und hat Zugriff auf alle Projekte und Daten.'),
+                   ('User*in', 'Standardrolle für alle, die einen aktiven Account haben. Kann grundlegende Funktionen nutzen, aber keine administrativen Änderungen vornehmen.'),
+                   ('Developer*in', 'Hat Zugriff auf Entwicklungs- und technische Funktionen. Kann Code, APIs und Systemintegration bearbeiten.'),
+                   ('Viewer*in', 'Hat nur Leserechte. Kann Projekte und Dokumente ansehen, aber keine Änderungen vornehmen.'),
+                   ('Editor*in', 'Kann Inhalte und Dokumente bearbeiten, aber keine System- oder Benutzerverwaltung durchführen.'),
+                   ('Cyberpunk Activist*in', 'Hat spezielle erweiterte Rechte, um das System kritisch zu hinterfragen, zu debuggen oder ethische Richtlinien durchzusetzen.')
             ON CONFLICT (name) DO NOTHING;
         `);
 
@@ -268,15 +272,38 @@ CREATE EXTENSION IF NOT EXISTS pgcrypto;
                 DO
                 NOTHING;
         `);
-        await queryRunner.query(`
-            INSERT INTO pm_user (username, email, password, "createdAt")
-            VALUES ('alovelace', 'ada@example.com', crypt('SecurePass123!', gen_salt('bf')), NOW()),
+
+        await  queryRunner.query(`
+           INSERT INTO pm_user (username, email, password, "createdAt")
+            VALUES ('alovelace', 'ada@example.com', crypt('ada123!', gen_salt('bf')), NOW()),
                    ('skywalker', 'jedi@example.com', crypt('UseTheForce!', gen_salt('bf')), NOW()),
                    ('cmarvel', 'carol@example.com', crypt('HigherFurtherFaster!', gen_salt('bf')), NOW()),
                    ('aturing', 'alan@example.com', crypt('TuringComplete!', gen_salt('bf')), NOW()),
                    ('mcurie', 'marie@example.com', crypt('RadiationRocks!', gen_salt('bf')), NOW()),
                    ('fkahlo', 'frida@example.com', crypt('VivaLaVida!', gen_salt('bf')), NOW())
             ON CONFLICT (email) DO NOTHING;
+        `)
+        await queryRunner.query(`
+            INSERT INTO user_role (user_id, role_id)
+            SELECT
+                u.id, r.id
+            FROM
+                (VALUES
+                     ('alovelace', 'Cyberpunk Activist*in'),
+                     ('alovelace', 'User*in'),
+                     ('alovelace', 'Admin'),
+                     ('aturing', 'Admin'),
+                     ('aturing', 'Editor*in'),
+                     ('mcurie', 'Admin'),
+                     ('fkahlo', 'Admin'),
+                     ('fkahlo', 'Viewer*in'),
+                     ('skywalker', 'Admin'),
+                     ('skywalker', 'User*in')
+                ) AS ur (username, role_name)
+                    JOIN pm_user u ON u.username = ur.username
+                    JOIN role r ON r.name = ur.role_name
+            ON CONFLICT (user_id, role_id) DO NOTHING;
+
         `);
 
         await queryRunner.query(`
@@ -820,15 +847,23 @@ CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
         // Tabellenliste für das Löschen der Daten
         const tablesToDelete = [
-            'document',
+            'activity_status',
             'activity',
+            'phase_status',
+            'phase_name',
             'project_phase',
             'project',
-            'project_status',
+            'methodology',
+            'milestone',
             'pm_user',
-
             'role',
+            'user_role',
+            'document',
             'employee',
+            'user',
+            'project_external_costs',
+            'external_cost_type',
+            'external_costs'
         ];
 
         // Hilfsfunktion für die Löschoperation

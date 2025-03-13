@@ -1,7 +1,6 @@
-// auth.guard.ts
-import { Injectable, CanActivate, ExecutionContext, UnauthorizedException, ForbiddenException } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
-import { JwtService } from '@nestjs/jwt';
+import {CanActivate, ExecutionContext, ForbiddenException, Injectable, UnauthorizedException} from '@nestjs/common';
+import {JwtService} from '@nestjs/jwt';
+import {Reflector} from '@nestjs/core';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -21,7 +20,16 @@ export class AuthGuard implements CanActivate {
             const decoded = this.jwtService.verify(token);
             request.user = decoded;
 
-            if (requiredRoles && !requiredRoles.includes(decoded.role)) {
+            // Falls keine Rollen benötigt werden, Zugriff erlauben
+            if (!requiredRoles) {
+                return true;
+            }
+
+            // Falls der User mehrere Rollen hat, prüfen wir auf Überschneidungen
+            const userRoles = Array.isArray(decoded.roles) ? decoded.roles : [decoded.roles];
+            const hasRole = requiredRoles.some((role) => userRoles.includes(role));
+
+            if (!hasRole) {
                 throw new ForbiddenException('Keine Berechtigung für diese Aktion');
             }
 

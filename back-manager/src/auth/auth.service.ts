@@ -20,9 +20,19 @@ export class AuthService {
     }
 
     async login(user: any) {
-        const payload = { username: user.username, sub: user.id, role: user.role };
+        const fullUser = await this.usersService.findOneByUsername(user.username);
+
+        if (!fullUser) {
+            throw new UnauthorizedException('Benutzer*in nicht gefunden');
+        }
+
+        const roles = fullUser.roles.map(role => role.name); // Array mit Rollennamen
+        const payload = { username: fullUser.username, sub: fullUser.id, roles };
+
         return {
             access_token: this.jwtService.sign(payload),
         };
     }
+
+
 }

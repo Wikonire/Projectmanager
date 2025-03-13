@@ -17,8 +17,8 @@ import {ProjectEntity} from '../entities/project.entity';
 import {ActivityEntity} from '../entities/activity.entity';
 import {MilestoneEntity} from '../entities/milestone.entity';
 import {Document} from '../entities/document.entity';
-import {User} from '../entities/user.entity';
-import {Role} from '../entities/role.entity';
+import {UserEntity} from '../entities/user.entity';
+import {RoleEntity} from '../entities/role.entity';
 import {ProjectPriority} from '../entities/project-priority.entity';
 import {ProjectStatus} from '../entities/project-status.entity';
 import {PhaseStatus} from '../entities/phase-status.entity';
@@ -54,8 +54,8 @@ import {ProjectStatusService} from '../repositories/project-status.service';
             ActivityEntity,
             MilestoneEntity,
             Document,
-            User,
-            Role,
+            UserEntity,
+            RoleEntity,
             PhaseStatus,
             Employee,
             EmployeePmFunction,

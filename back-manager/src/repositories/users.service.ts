@@ -2,20 +2,20 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import {CreateUserDto, UpdateUserDto} from '../dtos/user.dto';
-import {User} from '../entities/user.entity';
+import {UserEntity} from '../entities/user.entity';
 
 @Injectable()
 export class UsersService {
     constructor(
-        @InjectRepository(User)
-        private readonly userRepository: Repository<User>,
+        @InjectRepository(UserEntity)
+        private readonly userRepository: Repository<UserEntity>,
     ) {}
 
-    async findAll(): Promise<User[]> {
+    async findAll(): Promise<UserEntity[]> {
         return this.userRepository.find();
     }
 
-    async findOne(id: string): Promise<User> {
+    async findOne(id: string): Promise<UserEntity> {
         const user = await this.userRepository.findOne({ where: { id } });
         if (!user) {
             throw new NotFoundException(`Benutzer mit ID ${id} nicht gefunden`);
@@ -23,17 +23,20 @@ export class UsersService {
         return user;
     }
 
-    async findOneByUsername(username: string): Promise<User | null> {
-        return this.userRepository.findOne({ where: { username } });
+    async findOneByUsername(username: string): Promise<UserEntity | null> {
+        return this.userRepository.findOne({
+            where: { username },
+            relations: ['roles'],
+        });
     }
 
 
-    async create(createUserDto: CreateUserDto): Promise<User> {
+    async create(createUserDto: CreateUserDto): Promise<UserEntity> {
         const user = this.userRepository.create(createUserDto);
         return this.userRepository.save(user);
     }
 
-    async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
+    async update(id: string, updateUserDto: UpdateUserDto): Promise<UserEntity> {
         await this.findOne(id);
         await this.userRepository.update(id, updateUserDto);
         return this.findOne(id);

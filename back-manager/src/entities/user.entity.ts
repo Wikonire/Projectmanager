@@ -1,15 +1,17 @@
-import {Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn} from 'typeorm';
+import {BeforeInsert, Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn} from 'typeorm';
+import * as bcrypt from 'bcrypt';
 import {Employee} from './employee.entity';
+import {RoleEntity} from './role.entity';
 
 @Entity('pm_user')
-export class User {
+export class UserEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
     @Column({length: 50, unique: true})
     username: string;
 
-    @Column({length: 320, unique: true})
+    @Column({length: 100, unique: true})
     email: string;
 
     @Column({length: 255})
@@ -24,5 +26,30 @@ export class User {
         joinColumn: { name: 'user_id', referencedColumnName: 'id' },
         inverseJoinColumn: { name: 'employee_id', referencedColumnName: 'id' }
     })
-    employees: Employee[];
+    employees?: Employee[];
+
+    @ManyToMany(() => RoleEntity, (role) => role.users, { cascade: true })
+    @JoinTable({
+        name: 'user_role',
+        joinColumn: { name: 'user_id', referencedColumnName: 'id' },
+        inverseJoinColumn: { name: 'role_id', referencedColumnName: 'id' }
+    })
+    roles: RoleEntity[];
+
+    /**
+     * Vor dem Speichern wird die E-Mail auf Kleinbuchstaben umgestellt.
+     */
+    @BeforeInsert()
+    normalizeEmail() {
+        this.email = this.email.toLowerCase();
+    }
+
+
+    /**
+     * Vor dem Speichern wird das Passwort gehasht.
+     */
+    @BeforeInsert()
+    async hashPassword() {
+        this.password = await bcrypt.hash(this.password, 10);
+    }
 }
