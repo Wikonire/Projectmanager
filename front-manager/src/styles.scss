@@ -1,16 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
-//@use '@angular/material' as mat;
-@use 'themes/themesm3-theme';
 @use '@angular/material' as mat;
 @include mat.core();
 
-// @include mat.system-level-colors(themesm3-theme.$light-theme);
-// @include mat.system-level-typography(themesm3-theme.$light-theme);
 
+$my-theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: mat.$rose-palette,
+  ),
+));
 
-
-
-html, body { height: 100%;
-  @include mat.core-theme(themesm3-theme.$light-theme);
+html {
+  @include mat.all-component-themes($my-theme);
   }
 body { margin: 0; font-family: Roboto, "Arial", sans-serif; }
+.full-width {
+  width: 100%;
+  margin-bottom: 15px;
+  }
+pre {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+  background-color: lightgray;
+  padding: 10px;
+
+  }
