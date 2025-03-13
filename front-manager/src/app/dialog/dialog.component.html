@@ -1,0 +1,11 @@
+<h2 mat-dialog-title *ngIf=" data && data.dialogTitle && data.dialogTitle.length>0">{{data.dialogTitle}}</h2>
+<mat-dialog-content *ngIf="data && data.dialogContent && data.dialogContent.length>0">{{data.dialogContent}}</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button  [mat-dialog-close]="onClickActionButton()" *ngIf="data && data.dialogActionButton &&  data.dialogActionButton.label && data.dialogActionButton.label.length>0">
+    <mat-icon *ngIf="data && data.dialogActionButton.icon">{{ data.dialogActionButton.icon }}</mat-icon>
+    {{data.dialogActionButton.label}}
+  </button>
+  <button mat-button color="warn" (click)="close()" *ngIf="data && data.dialogActionCancel && data.dialogActionCancel.label && data.dialogActionCancel.label.length>0" >
+    <mat-icon *ngIf="data && data.dialogActionCancel.icon">{{data.dialogActionCancel.icon}}</mat-icon>
+    {{data.dialogActionCancel.label}}</button>
+</mat-dialog-actions>

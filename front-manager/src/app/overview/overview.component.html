@@ -1,0 +1,91 @@
+<div class="table-container">
+
+<!-- Aktionen über der Tabelle -->
+<h2 *ngIf="title && title.length>0">{{ title }}</h2>
+<div class="actions-container" *ngIf="actions.length">
+  <button
+    [matTooltip]="btn?.action?.description ? btn?.action?.description(selectedCount()):''"
+    *ngFor="let btn of buttonLabels()"
+    mat-button
+    (click)="executeAction(btn.action)"
+    [disabled]="selectedCount() === 0"
+  >
+    <mat-icon *ngIf="btn.action?.icon">{{ btn.action.icon }}</mat-icon>
+    {{ btn.label }}
+  </button>
+</div>
+
+<!-- Tabelle mit Sortierung -->
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+  <!-- Auswahlspalte -->
+  <ng-container matColumnDef="select">
+    <th mat-header-cell *matHeaderCellDef>
+      <mat-checkbox
+        (change)="toggleAllSelection($event.checked)"
+        [checked]="isAllSelected()"
+        [indeterminate]="isIndeterminate()"
+        [matTooltip]="'Alle auswählen'"
+      ></mat-checkbox>
+    </th>
+    <td mat-cell *matCellDef="let row">
+      <mat-checkbox
+        (change)="toggleSelection(row)"
+        [checked]="isSelected()(row)"
+        (keydown.enter)="toggleSelection(row)"
+        (keydown.space)="toggleSelection(row)"
+        tabindex="0"
+        role="checkbox"
+        [matTooltip]="'Zeile auswählen: ' + row[columns[0].name]"
+      ></mat-checkbox>
+    </td>
+  </ng-container>
+
+  <!-- Dynamische, sortierbare Spalten -->
+  <ng-container *ngFor="let column of columns" [matColumnDef]="column.name">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      {{ column.label | titlecase }}
+    </th>
+    <td mat-cell *matCellDef="let row">
+      <ng-container *ngIf="row[column.name]?.style; else defaultColumn">
+      <span [ngStyle]="row[column.name].style">
+        {{ row[column.name].name }}
+      </span>
+        <span *ngIf="!row[column.name]?.style">{{ row[column.name].name }}</span>
+      </ng-container>
+      <ng-template #defaultColumn>
+        <ng-container *ngIf="column.name === 'detail' && row[column.name] !=='' && hasDetailColumn()">
+        <button mat-button (click)="onDetail(row)">
+            <mat-icon>visibility</mat-icon>
+          Details
+          </button>
+        </ng-container>
+        <ng-container *ngIf="column.name === 'edit' && row[column.name] !=='' && hasEditColumn()">
+        <button mat-button (click)="onEdit(row)">
+            <mat-icon>edit</mat-icon>
+          Bearbeiten
+          </button>
+        </ng-container>
+        {{ row[column.name] }}
+      </ng-template>
+    </td>
+  </ng-container>
+
+
+  <tr mat-header-row *matHeaderRowDef="visibleColumns()"></tr>
+  <tr
+    mat-row
+    *matRowDef="let row; columns: visibleColumns()"
+    (click)="toggleSelection(row)"
+    [class.selected]="isSelected()(row)"
+    tabindex="0"
+    (keydown.enter)="toggleSelection(row)"
+    (keydown.space)="toggleSelection(row)"
+    role="row"
+    [attr.aria-selected]="isSelected()(row)"
+  >
+
+  </tr>
+
+</table>
+</div>

@@ -1,0 +1,100 @@
+<h2>Projektdetails</h2>
+<mat-card class="container">
+
+  <mat-card *ngIf="project && !isProjectEditing">
+    <span>
+      <h2>Projekt: {{ project.title }}</h2>
+    <dl>
+      <dt>Beschreibung:</dt>
+      <dd>{{ project.description }}</dd>
+
+      <dt>Priorität:</dt>
+      <dd>
+      <span class="priority-label" >
+        {{ project.priority?.name }}
+      </span>
+      </dd>
+
+      <dt>Status:</dt>
+      <dd>{{ project.status?.name }}</dd>
+
+      <dt>Methodik:</dt>
+      <dd>{{ project.methodology?.name }}</dd>
+
+      <dt>Geplante Dauer:</dt>
+      <dd>{{ project.plannedStartDate|date:'EEEE, dd.MM.yyyy' }} – {{ project.plannedEndDate|date:'EEEE, dd.MM.yyyy'}}</dd>
+    <dt>
+      Fortschritt:
+    </dt>
+      <dd class="progress-label">
+        {{ project.progress }} %
+      </dd>
+    </dl>
+    <mat-progress-bar mode="determinate" [value]="project.progress"></mat-progress-bar>
+    </span>
+<mat-accordion>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Dokumente</mat-panel-title>
+      <mat-panel-description> Anzahl: {{project.documents?.length}} </mat-panel-description>
+    </mat-expansion-panel-header>
+    <app-document-list *ngIf="project.documents && project.documents.length>0" [documents]="project.documents"></app-document-list>
+    <p *ngIf="project.documents && project.documents.length===0">Keine Dokumente vorhanden</p>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Phasen
+      </mat-panel-title>
+      <mat-panel-description *ngIf="project.projectPhases && project.projectPhases.length">
+        Anzahl: {{project.projectPhases.length}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+<app-phase-list *ngIf="project.projectPhases && project.projectPhases.length>0" [data]="project.projectPhases" [popupWidth]="'800px'"></app-phase-list>
+    <p *ngIf="project.projectPhases && project.projectPhases.length===0">Keine Dokumente vorhanden</p>
+  </mat-expansion-panel>
+</mat-accordion>
+  </mat-card>
+  <mat-card-actions>
+    <button *ngIf="!isProjectEditing" mat-raised-button color="primary" (click)="toggleEdit()">Bearbeiten</button>
+    <button mat-raised-button color="warn" (click)="openDeleteConfirmationDialog()">Projekt löschen</button>
+  </mat-card-actions>
+
+  <!-- Bearbeitungsformular -->
+  <mat-card *ngIf="isProjectEditing">
+    <h3>Projekt bearbeiten</h3>
+    <form [formGroup]="editForm">
+      <mat-form-field class="full-width">
+        <mat-label>Titel</mat-label>
+        <input matInput formControlName="title">
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Beschreibung</mat-label>
+        <textarea matInput formControlName="description"></textarea>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Fortschritt</mat-label>
+        <input matInput type="number" formControlName="progress">
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Startdatum</mat-label>
+        <input matInput type="date" formControlName="plannedStartDate">
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Enddatum</mat-label>
+        <input matInput type="date" formControlName="plannedEndDate">
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" (click)="saveChanges()">Speichern</button>
+      <button mat-button (click)="cancelEdit()">Abbrechen</button>
+    </form>
+  </mat-card>
+</mat-card>
+

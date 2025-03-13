@@ -1,0 +1,36 @@
+<ng-container *ngIf="documents.length > 0">
+  <ng-container *ngFor="let document of documents">
+    <mat-table [dataSource]="documents" class="mat-elevation-z8">
+      <ng-container matColumnDef="title">
+        <mat-header-cell *matHeaderCellDef> Titel </mat-header-cell>
+        <mat-cell *matCellDef="let doc"> {{ doc.title }} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="content">
+        <mat-header-cell *matHeaderCellDef > Inhalt </mat-header-cell>
+        <mat-cell *matCellDef="let doc" class="content">
+          <app-markdown [data]="doc.content" [truncateSize]="1"></app-markdown>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="createdAt">
+        <mat-header-cell *matHeaderCellDef> Erstellungsdatum </mat-header-cell>
+        <mat-cell *matCellDef="let doc"> {{ doc.createdAt |date:'EEEE, dd.MM.yyyy'}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef> Aktionen </mat-header-cell>
+        <mat-cell *matCellDef="let doc">
+          <button mat-button color="primary" (click)="openDocument(doc)">
+            Details
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+  </ng-container>
+</ng-container>
+<ng-container *ngIf="documents.length === 0">
+  <p>Keine Dokumente vorhanden</p>
+</ng-container>
