@@ -14,28 +14,24 @@ export class AuthGuard implements CanActivate {
         if (!authHeader) {
             throw new UnauthorizedException('Kein Token vorhanden, Zugriff verweigert');
         }
-
         const token = authHeader.split(' ')[1];
-        try {
-            const decoded = this.jwtService.verify(token);
-            request.user = decoded;
+        const decoded = this.jwtService.verify(token);
 
-            // Falls keine Rollen benötigt werden, Zugriff erlauben
-            if (!requiredRoles) {
-                return true;
-            }
+        request.user = decoded;
 
-            // Falls der User mehrere Rollen hat, prüfen wir auf Überschneidungen
-            const userRoles = Array.isArray(decoded.roles) ? decoded.roles : [decoded.roles];
-            const hasRole = requiredRoles.some((role) => userRoles.includes(role));
-
-            if (!hasRole) {
-                throw new ForbiddenException('Keine Berechtigung für diese Aktion');
-            }
-
+        // Falls keine Rollen benötigt werden, Zugriff erlauben
+        if (!requiredRoles) {
             return true;
-        } catch (error) {
-            throw new ForbiddenException('Ungültiges Token');
         }
+
+        // Falls der User mehrere Rollen hat, prüfen wir auf Überschneidungen
+        const userRoles = Array.isArray(decoded.roles) ? decoded.roles : [decoded.roles];
+        const hasRole = requiredRoles.some((role) => userRoles.includes(role));
+
+        if (!hasRole) {
+            throw new ForbiddenException('Keine Berechtigung für diese Aktion');
+        }
+
+        return true;
     }
 }
