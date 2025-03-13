@@ -1,2 +1,23 @@
 <h2>Home</h2>
-<!--<app-overview [data]="users" [columns]="displayedColumns" [actions]="actions"></app-overview>-->
+<mat-grid-list cols="2" rowHeight="350px" gutterSize="16px">
+  <mat-grid-tile>
+    <mat-card class="card">
+      <mat-card-title>Willkommen auf deiner persönlichen Seite</mat-card-title>
+      <mat-card-content>
+        <app-approval></app-approval>
+      </mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+    <mat-card class="card">
+      <mat-card-title>Mehr erfahren</mat-card-title>
+      <mat-card-content>
+        <p>Nutze Angular Material für ein modernes UI-Design!</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button color="primary">Details</button>
+      </mat-card-actions>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>
