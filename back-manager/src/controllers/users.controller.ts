@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
+import {Controller, Get, Post, Put, Delete, Param, Body, UsePipes, ValidationPipe} from '@nestjs/common';
 import {CreateUserDto, UpdateUserDto} from '../dtos/user.dto';
 import {UsersService} from '../repositories/users.service';
 
 
 @Controller('users')
+@UsePipes(new ValidationPipe({ transform: true }))
 export class UsersController {
     constructor(private readonly usersService: UsersService) {}
 

@@ -1,45 +1,40 @@
-import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
-
+import {Controller, Get, Post, Body, Param, Delete, UsePipes, ValidationPipe, Patch, Put} from '@nestjs/common';
 import {ProjectService} from '../repositories/project.service';
 import {CreateProjectDto, UpdateProjectDto} from '../dtos/project.dto';
+import {ProjectEntity} from '../entities/project.entity';
 
 @Controller('projects')
 export class ProjectsController {
     constructor(private readonly projectsService: ProjectService) {}
 
-   // @Roles()
     @Get()
-    findAll() {
-        return this.projectsService.findAll();
+    findAll():Promise<ProjectEntity[]> {
+        return this.projectsService.findAllActive();
     }
 
-    @Get(':id/details')
-    async getProjectDetailsById(@Param('id') id: string) {
-        return this.projectsService.findOne(id)
+    @Get('archived')
+    findAllArchived():Promise<ProjectEntity[]> {
+        return this.projectsService.findAllArchived();
     }
 
-
-    // @Roles(Role.Admin, Role.ProjectLeader, Role.Employee)
     @Get(':id')
-    findOne(@Param('id') id: string) {
+    findOne(@Param('id') id: string):Promise<ProjectEntity> {
         return this.projectsService.findOne(id);
     }
 
-   // @Roles(Role.Admin, Role.ProjectLeader)
     @Post()
-    create(@Body() createProjectDto: CreateProjectDto) {
+    create(@Body() createProjectDto: CreateProjectDto):Promise<ProjectEntity> {
         return this.projectsService.create(createProjectDto);
     }
 
-   // @Roles(Role.Admin, Role.ProjectLeader)
-    @Put(':id')
-    update(@Param('id') id: string, @Body() updateProjectDto: UpdateProjectDto) {
+    @Patch(':id')
+    update(@Param('id') id: string, @Body() updateProjectDto: UpdateProjectDto):Promise<ProjectEntity> {
+        console.log(updateProjectDto);
         return this.projectsService.update(id, updateProjectDto);
     }
 
-   // @Roles(Role.Admin)
     @Delete(':id')
-    remove(@Param('id') id: string) {
+    remove(@Param('id') id: string):Promise<void> {
         return this.projectsService.remove(id);
     }
 }

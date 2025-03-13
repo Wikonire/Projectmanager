@@ -1,9 +1,9 @@
-import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Put, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
 import {ActivitiesService} from '../repositories/activities.service';
 import {CreateActivityDto, UpdateActivityDto} from '../dtos/activity.dto';
 
-
 @Controller('activities')
+@UsePipes(new ValidationPipe({ transform: true }))
 export class ActivitiesController {
     constructor(private readonly activitiesService: ActivitiesService) {}
 

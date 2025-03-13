@@ -1,9 +1,10 @@
-import {Controller, Get, Post, Put, Delete, Param, Body} from '@nestjs/common';
+import {Controller, Get, Post, Put, Delete, Param, Body, UsePipes, ValidationPipe} from '@nestjs/common';
 
 import {DocumentsService} from '../repositories/document.service';
 import {CreateDocumentDto, UpdateDocumentDto} from '../dtos/document.dto';
 
 @Controller('documents')
+@UsePipes(new ValidationPipe({ transform: true }))
 export class DocumentsController {
     constructor(private readonly documentsService: DocumentsService) {}
 

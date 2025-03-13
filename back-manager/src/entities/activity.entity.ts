@@ -1,35 +1,27 @@
-import {Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
+import {Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
 import {Max, Min} from 'class-validator';
 import {ProjectPhase} from './project-phase.entity';
-import {ActivityStatus} from './activity-status.entity';
+import {ActivityStatusEntity} from './activity-status.entity';
+import {Document} from './document.entity';
 
-@Entity()
-export class Activity {
+@Entity('activity')
+export class ActivityEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;
-
-
-    @ManyToOne(() => ProjectPhase, { onDelete: 'CASCADE', nullable: true })
-    @JoinColumn({ name: 'phase_id' })
-    phase?: ProjectPhase;
-
-    @ManyToOne(() => ActivityStatus, { onDelete: 'CASCADE' })
-    @JoinColumn({ name: 'activity_status_id' })
-    activityStatus: ActivityStatus;
 
     @Column({length: 255})
     title: string;
 
-    @Column('date', {nullable: true})
+    @CreateDateColumn({nullable: true, default: null})
     plannedStartDate?: Date;
 
-    @Column('date', {nullable: true})
+    @CreateDateColumn({nullable: true, default: null})
     plannedEndDate?: Date;
 
-    @Column('timestamp', {nullable: true})
+    @CreateDateColumn({type: 'timestamp', nullable: true, default: null})
     actualStartDate?: Date;
 
-    @Column('timestamp', {nullable: true})
+    @CreateDateColumn({type: 'timestamp', nullable: true, default: null})
     actualEndDate?: Date;
 
     @Column('numeric', {precision: 5, scale: 2, default: 0})
@@ -39,4 +31,15 @@ export class Activity {
 
     @Column('smallint')
     estimation: number;
+
+    @ManyToOne(() => ProjectPhase, { onDelete: 'CASCADE', nullable: true })
+    @JoinColumn({ name: 'phase_id' })
+    phase?: ProjectPhase;
+
+    @ManyToOne(() => ActivityStatusEntity, { onDelete: 'CASCADE' })
+    @JoinColumn({ name: 'activity_status_id' })
+    activityStatus: ActivityStatusEntity;
+
+    @OneToMany(() => Document, (document) => document.activity, { cascade: true, nullable: true })
+    documents?: Document[];
 }

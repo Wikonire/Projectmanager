@@ -1,9 +1,24 @@
-import { IsString, IsUUID, IsOptional, IsDate, IsDecimal, ValidateNested } from 'class-validator';
+import {
+    IsString,
+    IsUUID,
+    IsOptional,
+    IsDate,
+    IsDecimal,
+    ValidateNested,
+    IsBoolean,
+    Min,
+    Max,
+    IsDateString
+} from 'class-validator';
 import { Type } from 'class-transformer';
-import { CreatePhaseDto } from './phases.dto';
-import { ProjectStatusDto } from './project-status.dto';
-import { ProjectPriorityDto } from './dtos.dto';
 import { PartialType } from '@nestjs/mapped-types';
+
+import {ProjectPhaseResponseDto} from './project-phase.dto';
+import { ProjectStatusDto } from './project-status.dto';
+import {CreateMethodologyDto} from '../repositories/methodology.service';
+import {MethodologyEntity} from '../entities/methodology.entity';
+import {ProjectPriorityDto} from './project-priority.dto';
+import {ProjectPhase} from '../entities/project-phase.entity';
 
 export class CreateProjectDto {
     @IsString()
@@ -14,42 +29,42 @@ export class CreateProjectDto {
     description?: string;
 
     @IsOptional()
-    @IsDate()
-    approval_date?: Date;
-
-    @IsUUID()
-    priority_id: string;
-
-    @IsUUID()
-    status_id: string;
+    @IsDateString()
+    approvalDate?: Date;
 
     @IsOptional()
-    @IsDate()
-    planned_start_date?: Date;
+    priority?: ProjectPriorityDto;
 
     @IsOptional()
-    @IsDate()
-    planned_end_date?: Date;
+    status?: ProjectStatusDto;
 
     @IsOptional()
-    @IsDate()
-    actual_start_date?: Date;
+    @IsDateString()
+    plannedStartDate?: Date;
 
     @IsOptional()
-    @IsDate()
-    actual_end_date?: Date;
+    @IsDateString()
+    plannedEndDate?: Date;
 
-    @IsString()
-    methodology: string;
+    @IsOptional()
+    @IsDateString()
+    actualStartDate?: Date;
+
+    @IsOptional()
+    @IsDateString()
+    actualEndDate?: Date;
+
+    @IsOptional()
+    methodology?: CreateMethodologyDto;
 
     @IsOptional()
     @IsDecimal()
+    @Min(0)
+    @Max(100)
     progress?: number;
 
     @IsOptional()
-    @ValidateNested({ each: true })
-    @Type(() => CreatePhaseDto)
-    phases?: CreatePhaseDto[];
+    phases?: ProjectPhaseResponseDto[];
 }
 
 export class UpdateProjectDto extends PartialType(CreateProjectDto) {}
@@ -59,10 +74,10 @@ export class ResponseProjectDto extends PartialType(CreateProjectDto) {
     @IsOptional()
     @ValidateNested()
     @Type(() => ProjectPriorityDto)
-    priority?: ProjectPriorityDto;
+    priority: ProjectPriorityDto;
 
     @IsOptional()
     @ValidateNested()
     @Type(() => ProjectStatusDto)
-    status?: ProjectStatusDto;
+    status: ProjectStatusDto;
 }

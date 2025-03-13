@@ -1,6 +1,6 @@
 import {Column, Entity, PrimaryGeneratedColumn} from 'typeorm';
 
-@Entity('role')
+@Entity()
 export class Role {
     @PrimaryGeneratedColumn('uuid') // UUID wird automatisch generiert
     id: string;

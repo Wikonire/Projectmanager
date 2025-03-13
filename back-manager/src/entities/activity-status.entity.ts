@@ -1,10 +1,13 @@
 import {Column, Entity, PrimaryGeneratedColumn} from 'typeorm';
 
-@Entity()
-export class ActivityStatus {
+@Entity('activity_status')
+export class ActivityStatusEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column({unique: true, length: 50})
+    @Column({type: 'varchar', unique: true, length: 50, nullable: false})
     name: string;
+
+    @Column({type: 'varchar', length: 80, nullable: true})
+    description: string;
 }

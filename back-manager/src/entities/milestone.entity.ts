@@ -1,17 +1,17 @@
 import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
 import {ProjectPhase} from './project-phase.entity';
-import {Activity} from './activity.entity';
+import {ActivityEntity} from './activity.entity';
 
-@Entity()
-export class Milestone {
+@Entity('milestone')
+export class MilestoneEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
     @ManyToOne(() => ProjectPhase, { onDelete: 'CASCADE', nullable: true })
     phase?: ProjectPhase;
 
-    @ManyToOne(() => Activity, { onDelete: 'CASCADE', nullable: true })
-    activity?: Activity;
+    @ManyToOne(() => ActivityEntity, { onDelete: 'CASCADE', nullable: true })
+    activity?: ActivityEntity;
 
     @Column({ length: 255 })
     title: string;

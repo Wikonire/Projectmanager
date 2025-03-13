@@ -1,4 +1,4 @@
-import { IsString, MaxLength, IsUUID, IsOptional } from 'class-validator';
+import { IsString, MaxLength} from 'class-validator';
 
 export class ProjectStatusDto {
     @IsString()

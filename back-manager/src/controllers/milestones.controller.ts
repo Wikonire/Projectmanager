@@ -1,10 +1,11 @@
-import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
+import {Controller, Get, Post, Put, Delete, Param, Body, UsePipes, ValidationPipe} from '@nestjs/common';
 
 import {CreateMilestoneDto, UpdateMilestoneDto} from '../dtos/milestone.dto';
 import {MilestoneService} from '../repositories/milestones.service';
 
 
 @Controller('milestones')
+@UsePipes(new ValidationPipe({ transform: true }))
 export class MilestonesController {
     constructor(private readonly milestoneService: MilestoneService) {}
 
@@ -19,11 +20,13 @@ export class MilestonesController {
     }
 
     @Post()
+    @UsePipes(new ValidationPipe({ transform: true }))
     create(@Body() createMilestoneDto: CreateMilestoneDto) {
         return this.milestoneService.create(createMilestoneDto);
     }
 
     @Put(':id')
+    @UsePipes(new ValidationPipe({ transform: true }))
     update(@Param('id') id: string, @Body() updateMilestoneDto: UpdateMilestoneDto) {
         return this.milestoneService.update(id, updateMilestoneDto);
     }

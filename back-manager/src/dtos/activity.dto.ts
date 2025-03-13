@@ -1,47 +1,102 @@
-import {IsString, IsUUID, IsOptional, IsDate, ValidateNested} from 'class-validator';
-import {PartialType} from '@nestjs/mapped-types';
-import {Type} from 'class-transformer';
-import {ActivityStatus} from '../entities/activity-status.entity';
-import {UpdatePhaseDto} from './phases.dto';
+import {
+    IsString,
+    IsUUID,
+    IsOptional,
+    IsDateString,
+    ValidateNested,
+    IsNotEmpty,
+    Min,
+    Max,
+    IsNumber
+} from 'class-validator';
+import { PartialType } from '@nestjs/mapped-types';
+import { Type } from 'class-transformer';
+import { ProjectPhaseResponseDto } from './project-phase.dto';
+import { ActivityStatusResponseDto } from './activity-status.dto';
 
 export class CreateActivityDto {
+    @IsString()
+    @IsNotEmpty()
+    title: string;
+
+    @IsOptional()
+    @IsDateString()
+    plannedStartDate?: string;
+
+    @IsOptional()
+    @IsDateString()
+    plannedEndDate?: string;
+
+    @IsOptional()
+    @IsDateString()
+    actualStartDate?: string;
+
+    @IsOptional()
+    @IsDateString()
+    actualEndDate?: string;
+
+    @IsOptional()
+    @Min(0)
+    @Max(100)
+    @IsNumber()
+    progress?: number;
+
+    @IsOptional()
+    @IsNumber()
+    estimation?: number;
+
+    @IsUUID()
+    @IsNotEmpty()
+    activityStatusId: string;
+
+    @IsUUID()
+    @IsNotEmpty()
+    phaseId: string;
+}
+
+
+export class UpdateActivityDto extends PartialType(CreateActivityDto) {}
+
+export class ResponseActivityDto {
+    @IsUUID()
+    id: string;
+
     @IsString()
     title: string;
 
     @IsOptional()
-    @IsDate()
-    planned_start_date?: Date;
+    @IsDateString()
+    plannedStartDate?: string;
 
     @IsOptional()
-    @IsDate()
-    planned_end_date?: Date;
+    @IsDateString()
+    plannedEndDate?: string;
 
     @IsOptional()
-    @IsDate()
-    actual_start_date?: Date;
+    @IsDateString()
+    actualStartDate?: string;
 
     @IsOptional()
-    @IsDate()
-    actual_end_date?: Date;
+    @IsDateString()
+    actualEndDate?: string;
 
-    @IsUUID()
-    activity_status_id: string;
+    @IsNotEmpty()
+    @Min(0)
+    @Max(100)
+    @IsNumber()
+    progress: number;
 
-    @IsUUID()
-    phase_id: string;
-}
-
-export class UpdateActivityDto extends PartialType(CreateActivityDto) {}
-
-export class ResponseActivityDto extends PartialType(CreateActivityDto) {
     @IsOptional()
+    @IsNumber()
+    estimation: number;
+
+    @IsNotEmpty()
     @ValidateNested()
-    @Type(() => ActivityStatus)
-    activity_status?: ActivityStatus;
+    @Type(() => ActivityStatusResponseDto)
+    activityStatus: ActivityStatusResponseDto;
 
-
-    @IsOptional()
+    @IsNotEmpty()
     @ValidateNested()
-    @Type(() => UpdatePhaseDto)
-    phase?: UpdatePhaseDto;
+    @Type(() => ProjectPhaseResponseDto)
+    phase: ProjectPhaseResponseDto;
 }

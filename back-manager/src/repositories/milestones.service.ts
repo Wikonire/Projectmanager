@@ -2,31 +2,31 @@ import { Injectable, NotFoundException, BadRequestException } from '@nestjs/comm
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateMilestoneDto, UpdateMilestoneDto } from '../dtos/milestone.dto';
-import {Milestone} from '../entities/milestone.entity';
+import {MilestoneEntity} from '../entities/milestone.entity';
 import {ProjectPhase} from '../entities/project-phase.entity';
-import {Activity} from '../entities/activity.entity';
+import {ActivityEntity} from '../entities/activity.entity';
 
 @Injectable()
 export class MilestoneService {
     constructor(
-        @InjectRepository(Milestone)
-        private readonly milestoneRepository: Repository<Milestone>,
+        @InjectRepository(MilestoneEntity)
+        private readonly milestoneRepository: Repository<MilestoneEntity>,
         @InjectRepository(ProjectPhase)
         private readonly phaseRepository: Repository<ProjectPhase>,
-        @InjectRepository(Activity)
-        private readonly activityRepository: Repository<Activity>,
+        @InjectRepository(ActivityEntity)
+        private readonly activityRepository: Repository<ActivityEntity>,
     ) {}
 
-    async findAll(): Promise<Milestone[]> {
+    async findAll(): Promise<MilestoneEntity[]> {
         return this.milestoneRepository.find({ relations: ['project', 'phase', 'activity'] });
     }
 
-    async findOneByIdOrFail(id: string): Promise<Milestone|undefined> {
+    async findOneByIdOrFail(id: string): Promise<MilestoneEntity|undefined> {
         return await this.milestoneRepository.findOneOrFail({ where: { id }, relations: ['project', 'phase', 'activity'] });
     }
 
-    async create(createMilestoneDto: CreateMilestoneDto): Promise<Milestone> {
-        const milestone = new Milestone();
+    async create(createMilestoneDto: CreateMilestoneDto): Promise<MilestoneEntity> {
+        const milestone = new MilestoneEntity();
         milestone.title = createMilestoneDto.title;
         milestone.plannedDate = createMilestoneDto.plannedDate;
         milestone.actualDate = createMilestoneDto.actualDate;
@@ -51,7 +51,7 @@ export class MilestoneService {
         return this.milestoneRepository.save(milestone);
     }
 
-    async update(id: string, updateMilestoneDto: UpdateMilestoneDto): Promise<Milestone> {
+    async update(id: string, updateMilestoneDto: UpdateMilestoneDto): Promise<MilestoneEntity> {
         const milestone = await this.findOneByIdOrFail(id);
         if (!milestone) {
             throw new NotFoundException(`Milestone mit ID ${id} nicht gefunden`);
@@ -63,7 +63,7 @@ export class MilestoneService {
         }
 
         if (updateMilestoneDto.activity) {
-            const activity:Activity|null = await this.activityRepository.findOneOrFail({ where: { id: updateMilestoneDto.activity } });
+            const activity:ActivityEntity|null = await this.activityRepository.findOneOrFail({ where: { id: updateMilestoneDto.activity } });
             milestone.activity = activity|| undefined;
         }
         return this.milestoneRepository.save(milestone);

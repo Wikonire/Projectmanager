@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import {ProjectPriorityDto} from '../dtos/dtos.dto';
 import {InjectRepository} from '@nestjs/typeorm';
 import {Repository} from 'typeorm';
 import {ProjectPriority} from '../entities/project-priority.entity';
+import {ProjectPriorityDto} from '../dtos/project-priority.dto';
 
 @Injectable()
 export class PriorityService {
