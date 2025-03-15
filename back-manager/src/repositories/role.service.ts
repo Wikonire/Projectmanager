@@ -13,4 +13,9 @@ export class RoleService {
     async findAll() {
         return this.roleRepository.find();
     }
+
+    async findOne(id: string):Promise<RoleEntity> {
+       return await this.roleRepository.findOneByOrFail({id})
+    }
+
 }

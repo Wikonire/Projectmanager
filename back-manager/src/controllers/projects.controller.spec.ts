@@ -1,7 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ProjectsController } from './projects.controller';
 import { ProjectService } from '../repositories/project.service';
-import { ProjectEntity } from '../entities/project.entity';
 import { CreateProjectDto, UpdateProjectDto } from '../dtos/project.dto';
 
 describe('ProjectsController', () => {
@@ -38,7 +37,7 @@ describe('ProjectsController', () => {
     });
 
     it('should return all active projects', async () => {
-        const result = await projectsController.findAll();
+        const result = await projectsController.findAllActive();
         expect(result).toEqual([{ id: '1', title: 'Test Project', description: 'A test project' }]);
         expect(projectService.findAllActive).toHaveBeenCalled();
     });

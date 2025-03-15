@@ -1,9 +1,9 @@
-import {Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
+import {Column, Entity, JoinColumn, ManyToMany, OneToMany, OneToOne, PrimaryGeneratedColumn} from 'typeorm';
 import {EmployeePmFunction} from './employee-pm-function.entity';
 import {UserEntity} from './user.entity';
 
-@Entity()
-export class Employee {
+@Entity('employee')
+export class EmployeeEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
@@ -16,8 +16,9 @@ export class Employee {
     @Column({type: 'timestamp', default: () => 'CURRENT_TIMESTAMP'})
     created_at: Date;
 
-    @ManyToMany(() => UserEntity, (user) => user.employees)
-    users: UserEntity[];
+    @OneToOne(() => UserEntity, (user) => user.employee)
+    @JoinColumn({ name: 'userId' })
+    user: UserEntity;
 
     @OneToMany(() => EmployeePmFunction, (epf) => epf.employee)
     employeePmFunctions: EmployeePmFunction[];

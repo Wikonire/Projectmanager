@@ -3,11 +3,12 @@ import {Project, ProjectOverviewData} from '../../shared/interfaces/project.mode
 import {PriorityColorService} from '../../shared/services/priority-color.service';
 import {AccessibleTextColorService} from '../../shared/services/accessible-text-color.service';
 import {ProjectService} from '../../shared/services/project.service';
-import {OverviewAction} from '../../shared/interfaces/overview-action.model';
+import {OverviewAction, OverviewColumn} from '../../shared/interfaces/overview-action.model';
 import {DialogComponent} from '../dialog/dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {OverviewComponent} from '../overview/overview.component';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 
@@ -19,15 +20,14 @@ import {OverviewComponent} from '../overview/overview.component';
 export class ProjectListComponent implements OnInit {
   @ViewChild(OverviewComponent) overviewComponent!: OverviewComponent<ProjectOverviewData>;
   projectOverviewData: ProjectOverviewData[] = [];
-  displayedColumns = [
-    {name: 'title', label: 'Titel'},
-    {name: 'description', label: 'Beschreibung'},
-    {name: 'progress', label: 'Fortschritt'},
-    {name: 'plannedStartDate', label: 'Geplantes Startdatum'},
-    {name: 'plannedEndDate', label: 'Geplantes Enddatum'},
-    {name: 'priority', label: 'Priorität'},
-    {name: 'detail', label: 'Detailsicht'},
-    {name: 'edit', label: 'Bearbeiten'}
+  displayedColumns:OverviewColumn[]= [
+    {name: 'title', label: 'Titel', type: undefined},
+    {name: 'description', label: 'Beschreibung', type: undefined},
+    {name: 'progress', label: 'Fortschritt in %',type: undefined},
+    {name: 'plannedStartDate', label: 'Geplantes Startdatum', type: 'date'},
+    {name: 'plannedEndDate', label: 'Geplantes Enddatum', type: 'date'},
+    {name: 'priority', label: 'Priorität', type: undefined},
+    {name: 'detail', label: 'Detailsicht', type: undefined},
   ];
   title = 'Projekt-Liste';
   actions: OverviewAction<ProjectOverviewData>[] = [
@@ -45,7 +45,8 @@ export class ProjectListComponent implements OnInit {
     private accessibleTextColorService: AccessibleTextColorService,
     private projectService: ProjectService,
     private matDialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {
   }
 
@@ -64,6 +65,7 @@ export class ProjectListComponent implements OnInit {
       },
     });
     dialogRef.afterClosed().subscribe(result => {
+      console.log('Dialog geschlossen:', result);
       if (result !== undefined && result === true) {
         this.deleteProject(selectedProjects);
         dialogRef.close();
@@ -72,7 +74,7 @@ export class ProjectListComponent implements OnInit {
   }
 
   private loadProjects() {
-    this.projectService.getProjects().subscribe((projects: Project[]) => {
+    this.projectService.getAllActive().subscribe((projects: Project[]) => {
       this.projects = projects;
       const priorityColors = this.priorityColorService.getPriorityColors(projects);
 
@@ -102,30 +104,24 @@ export class ProjectListComponent implements OnInit {
   }
 
   private deleteProject(projects: Project[]): void {
-    for (const p of projects) {
-      this.projectService.deleteProject(p).subscribe((data) => {
-      });
-    }
-    const dialogRef = this.matDialog.open(DialogComponent, {
-      data: {
-        dialogContent: `${projects.length > 1 ? 'Das' : 'Die'} ${projects.length} Projekt${projects.length > 1 ? 'e' : ''} wurde${projects.length > 1 ? 'en' : 'e'} erfolgreich gelöscht.`,
-        dialogTitle: "Erfolgreich gelöscht",
-        dialogActionCancelLabel: "Zur Projekt-Übersicht zurückkehren"
+    this.projectService.deleteMany(projects.map(project => project.id)).subscribe({
+      next: () => {
+        this.loadProjects();
+        this.snackBar.open(
+          `${projects.length > 1 ? 'Die' : 'Das'} ${projects.length} Projekt${projects.length > 1 ? 'e' : ''} wurde${projects.length > 1 ? 'en' : 'e'} erfolgreich gelöscht.`,
+          'Schließen',
+          { duration: 3000 } // Snackbar verschwindet nach 3 Sekunden
+        );
       },
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result !== undefined && result === true) {
-        for (const project of projects) {
-          this.projectService.deleteProject(project);
-        }
-        dialogRef.close();
-        this.router.navigate(['/projects']);
-
-      } else {
-
+      error: (error) => {
+        console.error('Fehler beim Löschen der Projekte:', error);
+        this.snackBar.open(
+          'Fehler beim Löschen der Projekte. Bitte versuche es erneut.',
+          'Schließen',
+          { duration: 4000, panelClass: ['snackbar-error'] } // Optional: Fehler-Design
+        );
       }
     });
-
   }
 
   onEdit($event:ProjectOverviewData) {

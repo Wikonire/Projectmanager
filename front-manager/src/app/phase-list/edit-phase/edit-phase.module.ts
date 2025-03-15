@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MatOptionModule} from '@angular/material/core';
+import {MatNativeDateModule, MatOptionModule} from '@angular/material/core';
 import {MatSelectModule} from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
 import {MatDatepickerModule} from '@angular/material/datepicker';
@@ -11,7 +11,8 @@ import {MatListModule} from '@angular/material/list';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 import {EditPhaseComponent} from './edit-phase.component';
-import {MatDialogTitle} from '@angular/material/dialog';
+import {MatDialogModule, MatDialogTitle} from '@angular/material/dialog';
+import {MatSlider, MatSliderModule, MatSliderThumb} from '@angular/material/slider';
 
 @NgModule({
   declarations: [EditPhaseComponent],
@@ -27,7 +28,9 @@ import {MatDialogTitle} from '@angular/material/dialog';
     MatButtonModule,
     MatListModule,
     MatAutocompleteModule,
-    MatDialogTitle
+    MatDialogModule,
+    MatSliderModule,
+    MatSliderThumb
   ],
   exports: [EditPhaseComponent]
 })

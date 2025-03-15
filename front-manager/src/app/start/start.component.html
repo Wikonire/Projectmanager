@@ -1,0 +1,54 @@
+<div class="container">
+  <h1>Willkommen beim Projektmanager</h1>
+  <p>Plane, organisiere und verwalte deine Projekte ganz einfach – alles an einem Ort.</p>
+
+  <div class="features">
+    <mat-card class="feature-card" *ngIf="isLoggedIn">
+      <mat-card-title>Deine Projekte auf einen Blick</mat-card-title>
+      <mat-card-content>Behalte den Überblick über alle laufenden Projekte und deren aktuellen Status.</mat-card-content>
+      <mat-card-actions>
+        <button mat-button color="primary" routerLink="/projects">Projekte ansehen</button>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card class="feature-card" *ngIf="!isLoggedIn">
+      <mat-card-title>Dein sicherer Zugang</mat-card-title>
+      <mat-card-content>Logge dich ein, um alle Funktionen nutzen zu können.</mat-card-content>
+      <mat-card-actions>
+        <button mat-button color="primary" routerLink="/login">Einloggen</button>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card class="feature-card" *ngIf="isLoggedIn">
+      <mat-card-title>Projekte verwalten</mat-card-title>
+      <mat-card-content>Erstelle neue Projekte, bearbeite bestehende und strukturiere deine Arbeit effizient.</mat-card-content>
+      <mat-card-actions>
+        <button mat-button color="primary" routerLink="/projects/manage">Projekte verwalten</button>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card class="feature-card" *ngIf="isLoggedIn">
+      <mat-card-title>Phasen erstellen & organisieren</mat-card-title>
+      <mat-card-content>Strukturiere deine Projekte in klare Phasen und teile Aufgaben sinnvoll auf.</mat-card-content>
+      <mat-card-actions>
+        <button mat-button color="primary" routerLink="/phases">Phasen erstellen</button>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card class="feature-card" *ngIf="isLoggedIn">
+      <mat-card-title>Effiziente Projektplanung</mat-card-title>
+      <mat-card-content>Definiere Meilensteine, plane Ressourcen und behalte den Zeitplan im Griff.</mat-card-content>
+      <mat-card-actions>
+        <button mat-button color="primary" routerLink="/planning">Planung starten</button>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card class="feature-card" *ngIf="isLoggedIn">
+      <mat-card-title>Fortschritt & Reporting</mat-card-title>
+      <mat-card-content>Überwache den Fortschritt deiner Projekte und erstelle Berichte.</mat-card-content>
+      <mat-card-actions>
+       <!-- <button mat-button color="primary" routerLink="/reporting">Zum Reporting</button> -->
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

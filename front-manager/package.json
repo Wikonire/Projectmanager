@@ -24,12 +24,15 @@
     "@angular/platform-browser-dynamic": "^18.2.13",
     "@angular/router": "^18.2.13",
     "dompurify": "^3.2.4",
+    "frappe-gantt": "^1.0.3",
+    "jwt-decode": "^4.0.0",
     "marked": "^15.0.7",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.0"
   },
   "devDependencies": {
+    "@types/frappe-gantt": "^0.9.0",
     "@types/jasmine": "~5.1.0",
     "jasmine-core": "~5.6.0",
     "karma": "~6.4.0",

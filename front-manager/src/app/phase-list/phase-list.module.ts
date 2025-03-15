@@ -11,22 +11,24 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {PhaseListComponent} from './phase-list.component';
+import {OverviewModule} from '../overview/overview.module';
 
 
 
 @NgModule({
   declarations: [PhaseListComponent],
-  imports: [
-    CommonModule,
-    MatTableModule,
-    MatButtonModule,
-    MatExpansionModule,
-    MatDialogModule,
-    EditPhaseModule,
-    MatIconModule,
-    MatSortModule,
-    MatPaginatorModule
-  ],
+    imports: [
+        CommonModule,
+        MatTableModule,
+        MatButtonModule,
+        MatExpansionModule,
+        MatDialogModule,
+        EditPhaseModule,
+        MatIconModule,
+        MatSortModule,
+        MatPaginatorModule,
+        OverviewModule
+    ],
   exports: [PhaseListComponent]
 })
 export class PhaseListModule { }

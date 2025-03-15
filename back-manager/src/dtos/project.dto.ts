@@ -13,7 +13,7 @@ import {
 import { Type } from 'class-transformer';
 import { PartialType } from '@nestjs/mapped-types';
 
-import {ProjectPhaseResponseDto} from './project-phase.dto';
+import {ProjectPhaseDto} from './project-phase.dto';
 import { ProjectStatusDto } from './project-status.dto';
 import {CreateMethodologyDto} from '../repositories/methodology.service';
 import {MethodologyEntity} from '../entities/methodology.entity';
@@ -64,7 +64,7 @@ export class CreateProjectDto {
     progress?: number;
 
     @IsOptional()
-    phases?: ProjectPhaseResponseDto[];
+    phases?: ProjectPhaseDto[];
 }
 
 export class UpdateProjectDto extends PartialType(CreateProjectDto) {}

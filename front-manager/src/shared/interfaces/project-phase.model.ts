@@ -1,14 +1,22 @@
+import {Document} from './document.model';
+
 export interface PhaseName {
-  name: string;
-  id: string;
+  name?: string;
+  id?: string;
+}
+
+export interface PhaseStatus {
+  name?: string;
+  id?: string;
 }
 export interface ProjectPhase {
   id: string;
-  progress: number;
-  plannedStartDate: string;
-  plannedEndDate: string;
-  actualStartDate: string | null;
-  actualEndDate: string | null;
   phaseName: PhaseName;
-  status: string;
+  progress: number;
+  plannedStartDate: Date;
+  plannedEndDate: Date;
+  actualStartDate?: Date;
+  actualEndDate?: Date;
+  phaseStatus: PhaseStatus;
+  documents?: Document[];
 }

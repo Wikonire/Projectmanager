@@ -8,7 +8,7 @@ import {ProjectStatus} from '../entities/project-status.entity';
 export class ProjectStatusService {
     constructor(
         @InjectRepository(ProjectStatus)
-        private statusRepository: Repository<ProjectStatus>,
+        private statusRepository: Repository<ProjectStatus>
     ) {}
 
     /**
@@ -27,5 +27,9 @@ export class ProjectStatusService {
        throw new NotFoundException(`Status with ${option.id ? 'ID' : 'Name'} ${option.id || option.name} not found`);
         }
         return status;
+    }
+
+    async findAllName():Promise<ProjectStatus[]> {
+        return await this.statusRepository.find();
     }
 }

@@ -331,13 +331,6 @@ INSERT INTO employee (id, last_name, first_name, created_at) VALUES
                                                                  (uuid_generate_v4(), 'Turing', 'Alan', now()),
                                                                  (uuid_generate_v4(), 'Bletchley', 'Joan', now());
 
--- Verbindung von Usern zu Mitarbeitenden
-INSERT INTO employee_user (employee_id, user_id) VALUES
-                                                     ((SELECT id FROM employee WHERE last_name = 'Lovelace'), (SELECT id FROM pm_user WHERE username = 'AdaLovelace42')),
-                                                     ((SELECT id FROM employee WHERE last_name = 'Skywalker'), (SELECT id FROM pm_user WHERE username = 'NonBinarySkywalker')),
-                                                     ((SELECT id FROM employee WHERE last_name = 'Danvers'), (SELECT id FROM pm_user WHERE username = 'CaptainMarvelFan')),
-                                                     ((SELECT id FROM employee WHERE last_name = 'Turing'), (SELECT id FROM pm_user WHERE username = 'XenonTheAI')),
-                                                     ((SELECT id FROM employee WHERE last_name = 'Bletchley'), (SELECT id FROM pm_user WHERE username = 'CyberFeminist'));
 
 -- Projekt-Prioritäten
 INSERT INTO project_priority (id, name) VALUES

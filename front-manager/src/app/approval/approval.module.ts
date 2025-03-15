@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {ApprovalComponent} from './approval.component';
-import {OverviewModule} from '../app/overview/overview.module';
+import {OverviewModule} from '../overview/overview.module';
 
 
 

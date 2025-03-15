@@ -10,7 +10,7 @@ import { Document } from '../../shared/interfaces/document.model';
 export class DocumentListComponent implements OnInit, OnChanges {
   @Input() documents: Document[] = [];
   @Input() dialogWidth: string = '500px';
-  displayedColumns: string[] = ['title','content', 'createdAt', 'actions'];
+  displayedColumns: string[] = ['title', 'createdAt', 'actions'];
 
   constructor(public dialog: MatDialog) {}
   ngOnInit(): void {}

@@ -12,6 +12,8 @@ import {DocumentListModule} from '../document-list/document-list.module';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {PhaseListModule} from '../phase-list/phase-list.module';
 import {DialogModule} from '../dialog/dialog.module';
+import {MatSlider, MatSliderThumb} from '@angular/material/slider';
+import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from '@angular/material/datepicker';
 
 
 @NgModule({
@@ -29,6 +31,11 @@ import {DialogModule} from '../dialog/dialog.module';
     MatExpansionModule,
     PhaseListModule,
     DialogModule,
+    MatSlider,
+    MatSliderThumb,
+    MatDatepicker,
+    MatDatepickerInput,
+    MatDatepickerToggle,
   ],
   exports: [ProjectDetailComponent],
 })

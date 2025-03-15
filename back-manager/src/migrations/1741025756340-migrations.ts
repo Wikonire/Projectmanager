@@ -36,12 +36,18 @@ EXECUTE FUNCTION update_phase_progress();
         // Rollen hinzufügen
         await queryRunner.query(`
             INSERT INTO role (name, description)
-            VALUES ('Admin', 'Hat volle Kontrolle über das System. Kann Benutzer*innen verwalten, Einstellungen ändern und hat Zugriff auf alle Projekte und Daten.'),
-                   ('User*in', 'Standardrolle für alle, die einen aktiven Account haben. Kann grundlegende Funktionen nutzen, aber keine administrativen Änderungen vornehmen.'),
-                   ('Developer*in', 'Hat Zugriff auf Entwicklungs- und technische Funktionen. Kann Code, APIs und Systemintegration bearbeiten.'),
-                   ('Viewer*in', 'Hat nur Leserechte. Kann Projekte und Dokumente ansehen, aber keine Änderungen vornehmen.'),
-                   ('Editor*in', 'Kann Inhalte und Dokumente bearbeiten, aber keine System- oder Benutzerverwaltung durchführen.'),
-                   ('Cyberpunk Activist*in', 'Hat spezielle erweiterte Rechte, um das System kritisch zu hinterfragen, zu debuggen oder ethische Richtlinien durchzusetzen.')
+            VALUES ('Admin',
+                    'Hat volle Kontrolle über das System. Kann Benutzer*innen verwalten, Einstellungen ändern und hat Zugriff auf alle Projekte und Daten.'),
+                   ('User*in',
+                    'Standardrolle für alle, die einen aktiven Account haben. Kann grundlegende Funktionen nutzen, aber keine administrativen Änderungen vornehmen.'),
+                   ('Developer*in',
+                    'Hat Zugriff auf Entwicklungs- und technische Funktionen. Kann Code, APIs und Systemintegration bearbeiten.'),
+                   ('Viewer*in',
+                    'Hat nur Leserechte. Kann Projekte und Dokumente ansehen, aber keine Änderungen vornehmen.'),
+                   ('Editor*in',
+                    'Kann Inhalte und Dokumente bearbeiten, aber keine System- oder Benutzerverwaltung durchführen.'),
+                   ('Cyberpunk Activist*in',
+                    'Hat spezielle erweiterte Rechte, um das System kritisch zu hinterfragen, zu debuggen oder ethische Richtlinien durchzusetzen.')
             ON CONFLICT (name) DO NOTHING;
         `);
 
@@ -248,16 +254,6 @@ EXECUTE FUNCTION update_phase_progress();
               AND EXISTS (SELECT 1 FROM pm_function WHERE "pmFunctionName" = 'Diversity & Inclusion Spezialist*in');
 
         `)
-        await queryRunner.query(`
-            INSERT
-            INTO employee(last_name, first_name, created_at)
-            VALUES ('Lovelace', 'Ada', now()),
-                   ('Skywalker', 'Mx. Jedi', now()),
-                   ('Marvel', 'Carol', now()),
-                   ('Turing', 'Alan', now()),
-                   ('Curie', 'Marie', now()),
-                   ('Kahlo', 'Frida', now())
-        `)
 
 
         await queryRunner.query(`
@@ -273,37 +269,44 @@ EXECUTE FUNCTION update_phase_progress();
                 NOTHING;
         `);
 
-        await  queryRunner.query(`
-           INSERT INTO pm_user (username, email, password, "createdAt")
-            VALUES ('alovelace', 'ada@example.com', crypt('ada123!', gen_salt('bf')), NOW()),
-                   ('skywalker', 'jedi@example.com', crypt('UseTheForce!', gen_salt('bf')), NOW()),
-                   ('cmarvel', 'carol@example.com', crypt('HigherFurtherFaster!', gen_salt('bf')), NOW()),
-                   ('aturing', 'alan@example.com', crypt('TuringComplete!', gen_salt('bf')), NOW()),
-                   ('mcurie', 'marie@example.com', crypt('RadiationRocks!', gen_salt('bf')), NOW()),
-                   ('fkahlo', 'frida@example.com', crypt('VivaLaVida!', gen_salt('bf')), NOW())
+        await queryRunner.query(`
+            INSERT INTO pm_user (username, email, password, "createdAt")
+            VALUES 
+                ('ada', 'ada@example.com', crypt('ada!', gen_salt('bf')), NOW()),
+                ('skywalker', 'jedi@example.com', crypt('UseTheForce!', gen_salt('bf')), NOW()),
+                ('cmarvel', 'carol@example.com', crypt('HigherFurtherFaster!', gen_salt('bf')), NOW()),
+                ('aturing', 'alan@example.com', crypt('TuringComplete!', gen_salt('bf')), NOW()),
+                ('mcurie', 'marie@example.com', crypt('RadiationRocks!', gen_salt('bf')), NOW()),
+                ('fkahlo', 'frida@example.com', crypt('VivaLaVida!', gen_salt('bf')), NOW())
             ON CONFLICT (email) DO NOTHING;
+        `);
+
+        await queryRunner.query(`
+            INSERT
+            INTO employee(last_name, first_name, created_at, "userId")
+            VALUES ('Lovelace', 'Ada', now(), (SELECT id FROM pm_user WHERE username = 'ada')),
+                   ('Skywalker', 'Mx. Jedi', now(), (SELECT id FROM pm_user WHERE username = 'skywalker')),
+                   ('Marvel', 'Carol', now(), (SELECT id FROM pm_user WHERE username = 'cmarvel')),
+                   ('Turing', 'Alan', now(), (SELECT id FROM pm_user WHERE username = 'aturing')),
+                   ('Curie', 'Marie', now(), (SELECT id FROM pm_user WHERE username = 'mcurie')),
+                   ('Kahlo', 'Frida', now(), (SELECT id FROM pm_user WHERE username = 'fkahlo'))
         `)
         await queryRunner.query(`
             INSERT INTO user_role (user_id, role_id)
-            SELECT
-                u.id, r.id
-            FROM
-                (VALUES
-                     ('alovelace', 'Cyberpunk Activist*in'),
-                     ('alovelace', 'User*in'),
-                     ('alovelace', 'Admin'),
-                     ('aturing', 'Admin'),
-                     ('aturing', 'Editor*in'),
-                     ('mcurie', 'Admin'),
-                     ('fkahlo', 'Admin'),
-                     ('fkahlo', 'Viewer*in'),
-                     ('skywalker', 'Admin'),
-                     ('skywalker', 'User*in')
-                ) AS ur (username, role_name)
-                    JOIN pm_user u ON u.username = ur.username
-                    JOIN role r ON r.name = ur.role_name
-            ON CONFLICT (user_id, role_id) DO NOTHING;
-
+            SELECT u.id,
+                   r.id
+            FROM (VALUES ('ada', 'Cyberpunk Activist*in'),
+                         ('ada', 'User*in'),
+                         ('ada', 'Admin'),
+                         ('aturing', 'Admin'),
+                         ('aturing', 'Editor*in'),
+                         ('mcurie', 'Admin'),
+                         ('fkahlo', 'Admin'),
+                         ('fkahlo', 'Viewer*in'),
+                         ('skywalker', 'Admin'),
+                         ('skywalker', 'User*in')) AS ur (username, role_name)
+                     JOIN pm_user u ON u.username = ur.username
+                     JOIN role r ON r.name = ur.role_name;
         `);
 
         await queryRunner.query(`
@@ -383,22 +386,22 @@ EXECUTE FUNCTION update_phase_progress();
                     WHERE "pmFunctionName" = 'IT-Architekt*in'
                     LIMIT 1)`)
 
-        await queryRunner.query(`
-            INSERT INTO employee_user (user_id, employee_id)
-            VALUES ((SELECT id FROM pm_user ORDER BY random() LIMIT 1),
-                    (SELECT id FROM employee WHERE last_name = 'Lovelace' LIMIT 1)),
-                   ((SELECT id FROM pm_user ORDER BY random() LIMIT 1),
-                    (SELECT id FROM employee WHERE last_name = 'Skywalker' LIMIT 1)),
-                   ((SELECT id FROM pm_user ORDER BY random() LIMIT 1),
-                    (SELECT id FROM employee WHERE last_name = 'Marvel' LIMIT 1)),
-                   ((SELECT id FROM pm_user ORDER BY random() LIMIT 1),
-                    (SELECT id FROM employee WHERE last_name = 'Turing' LIMIT 1)),
-                   ((SELECT id FROM pm_user ORDER BY random() LIMIT 1),
-                    (SELECT id FROM employee WHERE last_name = 'Curie' LIMIT 1)),
-                   ((SELECT id FROM pm_user ORDER BY random() LIMIT 1),
-                    (SELECT id FROM employee WHERE last_name = 'Kahlo' LIMIT 1));
+        /*      await queryRunner.query(`
+                  INSERT INTO employee_user ("user_id", employee_id)
+                  VALUES ((SELECT id FROM pm_user ORDER BY random() LIMIT 1),
+                          (SELECT id FROM employee WHERE last_name = 'Lovelace' LIMIT 1)),
+                         ((SELECT id FROM pm_user ORDER BY random() LIMIT 1),
+                          (SELECT id FROM employee WHERE last_name = 'Skywalker' LIMIT 1)),
+                         ((SELECT id FROM pm_user ORDER BY random() LIMIT 1),
+                          (SELECT id FROM employee WHERE last_name = 'Marvel' LIMIT 1)),
+                         ((SELECT id FROM pm_user ORDER BY random() LIMIT 1),
+                          (SELECT id FROM employee WHERE last_name = 'Turing' LIMIT 1)),
+                         ((SELECT id FROM pm_user ORDER BY random() LIMIT 1),
+                          (SELECT id FROM employee WHERE last_name = 'Curie' LIMIT 1)),
+                         ((SELECT id FROM pm_user ORDER BY random() LIMIT 1),
+                          (SELECT id FROM employee WHERE last_name = 'Kahlo' LIMIT 1));
 
-        `);
+              `);*/
 
         await queryRunner.query(`
 
@@ -682,7 +685,7 @@ EXECUTE FUNCTION update_phase_progress();
 
                    ('API-Dokumentation',
                     '### Endpunkte:
-\n- \`POST /auth/login\` - Benutzeranmeldung
+\n- \`POST /auth/login\` - Benutzendenanmeldung
 \n- \`GET /projects/:id\` - Projektinformationen abrufen
 \n- \`POST /tasks\` - Neue Aufgabe erstellen
 \n
@@ -827,7 +830,8 @@ EXECUTE FUNCTION update_phase_progress();
 
                 ('Projektabschluss & Feedbackrunde', '2024-07-01', NULL,
                  'Das Projekt wird offiziell abgeschlossen und reflektiert.',
-                 NULL, (SELECT id FROM activity WHERE title = 'Projekt-Review & Lessons Learned' LIMIT 1));        `)
+                 NULL, (SELECT id FROM activity WHERE title = 'Projekt-Review & Lessons Learned' LIMIT 1));        `);
+
 
         await queryRunner.query(`
             WITH random_phases AS (SELECT id                                                       AS activity_id,
@@ -837,7 +841,7 @@ EXECUTE FUNCTION update_phase_progress();
             SET phase_id = random_phases.random_phase_id
             FROM random_phases
             WHERE activity.id = random_phases.activity_id;
-        `)
+        `);
 
         console.log("Testdaten erfolgreich eingefügt!");
     }

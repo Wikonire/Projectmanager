@@ -11,7 +11,7 @@ import {
 } from 'class-validator';
 import { PartialType } from '@nestjs/mapped-types';
 import { Type } from 'class-transformer';
-import { ProjectPhaseResponseDto } from './project-phase.dto';
+import { ProjectPhaseDto } from './project-phase.dto';
 import { ActivityStatusResponseDto } from './activity-status.dto';
 
 export class CreateActivityDto {
@@ -97,6 +97,6 @@ export class ResponseActivityDto {
 
     @IsNotEmpty()
     @ValidateNested()
-    @Type(() => ProjectPhaseResponseDto)
-    phase: ProjectPhaseResponseDto;
+    @Type(() => ProjectPhaseDto)
+    phase: ProjectPhaseDto;
 }

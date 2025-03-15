@@ -31,7 +31,7 @@ describe('AuthController', () => {
 
     it('should return a token on login', async () => {
         const req = { user: { username: 'testuser', password: 'testpass' } };
-        const result = await authController.login(req);
+        const result = await authController.login(req.user);
         expect(result).toEqual({ access_token: 'mock_token' });
         expect(authService.login).toHaveBeenCalledWith(req.user);
     });

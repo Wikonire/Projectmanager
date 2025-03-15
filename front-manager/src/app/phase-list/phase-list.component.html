@@ -1,11 +1,14 @@
 
 
 <ng-container *ngIf="data.length > 0">
-  <button mat-raised-button color="primary" (click)="openPhase()"><mat-icon>add</mat-icon>Phase hinzufügen</button>
-    <mat-table [dataSource]="data" class="mat-elevation-z8">
+  <button *ngIf="editMode" mat-raised-button color="primary" (click)="openPhase()"><mat-icon>add</mat-icon>Phase hinzufügen</button>
+
+
+
+  <mat-table [dataSource]="data" class="mat-elevation-z8">
       <ng-container matColumnDef="phaseName">
         <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-        <mat-cell *matCellDef="let pha"> {{ pha.phaseName.name }} </mat-cell>
+        <mat-cell *matCellDef="let pha"> {{ pha?.phaseName?.name ?? '-' }} </mat-cell>
       </ng-container>
 
       <ng-container  matColumnDef="progress">

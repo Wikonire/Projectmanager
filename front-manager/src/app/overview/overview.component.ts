@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { OverviewAction } from '../../shared/interfaces/overview-action.model';
+import {OverviewAction, OverviewColumn} from '../../shared/interfaces/overview-action.model';
 
 @Component({
   selector: 'app-overview',
@@ -19,11 +19,12 @@ import { OverviewAction } from '../../shared/interfaces/overview-action.model';
   styleUrls: ['./overview.component.scss']
 })
 export class OverviewComponent<T extends { id: string | number }> implements OnInit, AfterViewInit {
+
   @Input() set data(value: T[]) {
     this.dataSignal.set(value);
   }
 
-  @Input() columns: { label: string; name: string }[] = [];
+  @Input() columns: OverviewColumn[] = [];
   @Input({}) actions: OverviewAction<T>[] = [];
   @Input() title: string = '';
   dataSignal: WritableSignal<T[]> = signal([]);
@@ -103,11 +104,12 @@ export class OverviewComponent<T extends { id: string | number }> implements OnI
   }
 
   onDetail(row: T) {
-    console.log("Details anzeigen:", row);
     this.detail.emit(row);
   }
 
   onEdit(row: T) {
     this.edit.emit(row)
   }
+
+
 }

@@ -10,7 +10,10 @@ html, body {
   margin: 0;
 
   }
-
+button.active {
+  background-color: #B6446F;
+  color: white;
+  }
 .header {
   .logo-link {
     display: flex;

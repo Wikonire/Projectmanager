@@ -1,10 +1,9 @@
 import { Controller, Get, Post, Body, Param, Put, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
 import {ProjectPhaseService} from '../repositories/project-phase.service';
-import {CreateProjectPhaseDto, UpdateProjectPhaseDto} from '../dtos/project-phase.dto';
+import {ProjectPhaseDto} from '../dtos/project-phase.dto';
 
 
 @Controller('phases')
-@UsePipes(new ValidationPipe({ transform: true }))
 export class ProjectPhasesController {
     constructor(private readonly projectPhasesService: ProjectPhaseService) {}
 
@@ -19,12 +18,13 @@ export class ProjectPhasesController {
     }
 
     @Post()
-    create(@Body() createProjectPhaseDto: CreateProjectPhaseDto) {
+    create(@Body() createProjectPhaseDto: ProjectPhaseDto) {
         return this.projectPhasesService.create(createProjectPhaseDto);
     }
 
     @Put(':id')
-    update(@Param('id') id: string, @Body() updateProjectPhaseDto: UpdateProjectPhaseDto) {
+    update(@Param('id') id: string, @Body() updateProjectPhaseDto: ProjectPhaseDto) {
+        console.log(updateProjectPhaseDto.phaseName)
         return this.projectPhasesService.update(id, updateProjectPhaseDto);
     }
 

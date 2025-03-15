@@ -1,40 +1,73 @@
-import {Controller, Get, Post, Body, Param, Delete, UsePipes, ValidationPipe, Patch, Put} from '@nestjs/common';
+import {
+    Controller,
+    Get,
+    Post,
+    Body,
+    Param,
+    Delete,
+    Patch,
+    BadRequestException, HttpCode, NotFoundException
+} from '@nestjs/common';
 import {ProjectService} from '../repositories/project.service';
-import {CreateProjectDto, UpdateProjectDto} from '../dtos/project.dto';
 import {ProjectEntity} from '../entities/project.entity';
+import {CreateProjectDto, UpdateProjectDto} from '../dtos/project.dto';
 
 @Controller('projects')
 export class ProjectsController {
     constructor(private readonly projectsService: ProjectService) {}
 
-    @Get()
-    findAll():Promise<ProjectEntity[]> {
+    @Get('active')
+    async findAllActive(): Promise<ProjectEntity[]> {
         return this.projectsService.findAllActive();
     }
 
     @Get('archived')
-    findAllArchived():Promise<ProjectEntity[]> {
+    async findAllArchived(): Promise<ProjectEntity[]> {
         return this.projectsService.findAllArchived();
     }
 
     @Get(':id')
-    findOne(@Param('id') id: string):Promise<ProjectEntity> {
+    async findOne(@Param('id') id: string): Promise<ProjectEntity> {
         return this.projectsService.findOne(id);
     }
 
     @Post()
-    create(@Body() createProjectDto: CreateProjectDto):Promise<ProjectEntity> {
+    async create(@Body() createProjectDto: CreateProjectDto): Promise<ProjectEntity> {
+        if (!createProjectDto || Object.keys(createProjectDto).length === 0) {
+            throw new BadRequestException('Das Projekt-DTO darf nicht leer sein.');
+        }
         return this.projectsService.create(createProjectDto);
     }
 
     @Patch(':id')
-    update(@Param('id') id: string, @Body() updateProjectDto: UpdateProjectDto):Promise<ProjectEntity> {
-        console.log(updateProjectDto);
-        return this.projectsService.update(id, updateProjectDto);
+    @HttpCode(204)
+    async update(@Param('id') id: string, @Body() updateProjectDto: Partial<UpdateProjectDto>): Promise<void> {
+        console.log(
+            'update',
+            id,
+            updateProjectDto)
+        if (!updateProjectDto || Object.keys(updateProjectDto).length === 0) {
+            throw new BadRequestException('Das Update-DTO darf nicht leer sein.');
+        }
+
+        const updatedProject = await this.projectsService.update(id, updateProjectDto);
+        if (!updatedProject) {
+            throw new NotFoundException(`Projekt mit ID ${id} nicht gefunden oder keine Änderungen vorgenommen.`);
+        }
     }
 
     @Delete(':id')
-    remove(@Param('id') id: string):Promise<void> {
-        return this.projectsService.remove(id);
+    @HttpCode(204) // Standard für DELETE, wenn erfolgreich
+    async remove(@Param('id') id: string): Promise<void> {
+        await this.projectsService.remove(id);
+    }
+
+    @Delete()
+    @HttpCode(204)
+    async removeMany(@Body() ids: string[]): Promise<void> {
+        if (!Array.isArray(ids) || ids.length === 0) {
+            throw new BadRequestException('Mindestens eine ID muss angegeben werden.');
+        }
+        await this.projectsService.removeMany(ids);
     }
 }

@@ -1,6 +1,6 @@
 <mat-card class="login-card">
   <h2>Login</h2>
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Benutzername</mat-label>
       <input matInput formControlName="username" required />

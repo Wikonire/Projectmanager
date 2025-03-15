@@ -7,7 +7,6 @@
     <dl>
       <dt>Beschreibung:</dt>
       <dd>{{ project.description }}</dd>
-
       <dt>Priorität:</dt>
       <dd>
       <span class="priority-label" >
@@ -23,6 +22,9 @@
 
       <dt>Geplante Dauer:</dt>
       <dd>{{ project.plannedStartDate|date:'EEEE, dd.MM.yyyy' }} – {{ project.plannedEndDate|date:'EEEE, dd.MM.yyyy'}}</dd>
+
+      <dt>Durchführungsdaten:</dt>
+      <dd>{{ project.actualStartDate|date:'EEEE, dd.MM.yyyy' }} – {{ project.actualEndDate|date:'EEEE, dd.MM.yyyy'}}</dd>
     <dt>
       Fortschritt:
     </dt>
@@ -32,36 +34,37 @@
     </dl>
     <mat-progress-bar mode="determinate" [value]="project.progress"></mat-progress-bar>
     </span>
-<mat-accordion>
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Dokumente</mat-panel-title>
+          <mat-panel-description> Anzahl: {{project.documents?.length}} </mat-panel-description>
+        </mat-expansion-panel-header>
+        <app-document-list *ngIf="project.documents && project.documents.length>0" [documents]="project.documents"></app-document-list>
+        <p *ngIf="project.documents && project.documents.length===0">Keine Dokumente vorhanden</p>
+      </mat-expansion-panel>
 
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Dokumente</mat-panel-title>
-      <mat-panel-description> Anzahl: {{project.documents?.length}} </mat-panel-description>
-    </mat-expansion-panel-header>
-    <app-document-list *ngIf="project.documents && project.documents.length>0" [documents]="project.documents"></app-document-list>
-    <p *ngIf="project.documents && project.documents.length===0">Keine Dokumente vorhanden</p>
-  </mat-expansion-panel>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Phasen
+          </mat-panel-title>
+          <mat-panel-description>
+            Anzahl: {{project.projectPhases?.length || 0}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <app-phase-list [editMode]="isProjectEditing" *ngIf="project.projectPhases && project.projectPhases.length>0" [data]="project.projectPhases" [popupWidth]="'800px'"></app-phase-list>
+        <p *ngIf="project.projectPhases && project.projectPhases.length===0">Keine Phasen vorhanden</p>
+      </mat-expansion-panel>
+    </mat-accordion>
 
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Phasen
-      </mat-panel-title>
-      <mat-panel-description *ngIf="project.projectPhases && project.projectPhases.length">
-        Anzahl: {{project.projectPhases.length}}
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-<app-phase-list *ngIf="project.projectPhases && project.projectPhases.length>0" [data]="project.projectPhases" [popupWidth]="'800px'"></app-phase-list>
-    <p *ngIf="project.projectPhases && project.projectPhases.length===0">Keine Dokumente vorhanden</p>
-  </mat-expansion-panel>
-</mat-accordion>
-  </mat-card>
-  <mat-card-actions>
+    <mat-card-actions>
     <button *ngIf="!isProjectEditing" mat-raised-button color="primary" (click)="toggleEdit()">Bearbeiten</button>
-    <button mat-raised-button color="warn" (click)="openDeleteConfirmationDialog()">Projekt löschen</button>
+    <button mat-button color="warn"  (click)="openDeleteConfirmationDialog()">Projekt löschen</button>
   </mat-card-actions>
+  </mat-card>
+
 
   <!-- Bearbeitungsformular -->
   <mat-card *ngIf="isProjectEditing">
@@ -77,23 +80,70 @@
         <textarea matInput formControlName="description"></textarea>
       </mat-form-field>
 
-      <mat-form-field class="full-width">
-        <mat-label>Fortschritt</mat-label>
-        <input matInput type="number" formControlName="progress">
+      <span class="full-width">
+        <mat-form-field  >
+          <mat-label>Fortschritt</mat-label>
+          <input matInput type="number" [step]="0.01" formControlName="progress">
+        </mat-form-field>
+          <mat-slider
+            class="full-width"
+            showTickMarks discrete
+            [min]="0"
+            [max]="100"
+            [step]="1" [displayWith]="displayProgress">
+    <input matSliderThumb [value]="editForm.get('progress')?.value||0.00" (valueChange)="onProgressChange($event)">
+  </mat-slider>
+      </span>
+
+
+      <mat-form-field  class="full-width">
+        <mat-label>Startdatum</mat-label>
+        <input matInput [matDatepicker]="picker1" formControlName="plannedStartDate">
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
       </mat-form-field>
 
-      <mat-form-field class="full-width">
-        <mat-label>Startdatum</mat-label>
-        <input matInput type="date" formControlName="plannedStartDate">
+      <mat-form-field  class="full-width">
+        <mat-label>Enddatum</mat-label>
+        <input matInput [matDatepicker]="picker2" formControlName="plannedEndDate">
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
       </mat-form-field>
+
+
 
       <mat-form-field class="full-width">
         <mat-label>Enddatum</mat-label>
         <input matInput type="date" formControlName="plannedEndDate">
       </mat-form-field>
+      <mat-accordion [multi]="true">
+        <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Dokumente</mat-panel-title>
+            <mat-panel-description> Anzahl: {{project.documents?.length}} </mat-panel-description>
+          </mat-expansion-panel-header>
+          <app-document-list *ngIf="project.documents && project.documents.length>0" [documents]="project.documents"></app-document-list>
+          <p *ngIf="project.documents && project.documents.length===0">Keine Dokumente vorhanden</p>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Phasen
+            </mat-panel-title>
+            <mat-panel-description>
+              Anzahl: {{project.projectPhases?.length || 0}}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <app-phase-list [editMode]="isProjectEditing" *ngIf="project.projectPhases && project.projectPhases.length>0" [data]="project.projectPhases" [popupWidth]="'800px'"></app-phase-list>
+          <p *ngIf="project.projectPhases && project.projectPhases.length===0">Keine Phasen vorhanden</p>
+        </mat-expansion-panel>
+      </mat-accordion>
 
       <button mat-raised-button color="primary" (click)="saveChanges()">Speichern</button>
       <button mat-button (click)="cancelEdit()">Abbrechen</button>
+      <button mat-button color="warn"  (click)="openDeleteConfirmationDialog()">Projekt löschen</button>
     </form>
   </mat-card>
 </mat-card>

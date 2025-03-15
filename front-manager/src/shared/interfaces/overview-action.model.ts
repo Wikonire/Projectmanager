@@ -5,3 +5,7 @@ export interface OverviewAction<T> {
   showIfAllSelected: boolean|undefined;
   description?: (count:number) => string;
 }
+export interface OverviewColumn {
+  label: string;
+  name: string;
+  type: 'date' | undefined;}

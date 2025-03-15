@@ -1,34 +1,38 @@
 <header class="header" id="header">
   <mat-toolbar color="primary" role="heading">
     <mat-toolbar-row role="banner">
-      <a routerLink="/home" class="logo-link">
+      <a routerLink="/start" class="logo-link">
         <img [ngSrc]="'assets/logo/logo-project-manager.svg'" alt="logo" class="logo" width="50" height="50">
         <h1>Project Manager</h1>
       </a>
       </mat-toolbar-row>
 
-<mat-toolbar-row role="navigation">
-
-  <mat-menu #appMenu="matMenu">
-    <ng-template matMenuContent>
-      <button mat-menu-item *ngFor="let item of sites; index as i;"
-              routerLink="{{item.path}}">
-        <mat-icon>{{ item.icon }}</mat-icon>
-        {{ item.title }}
+    <mat-toolbar-row role="navigation">
+      <button mat-button [routerLink]="'home'" routerLinkActive="active" *ngIf="isLoggedIn">
+        <mat-icon>home</mat-icon>
+        Account
       </button>
-    </ng-template>
+      <button mat-button [routerLink]="'project-list'" routerLinkActive="active" *ngIf="isLoggedIn">
+        <mat-icon>lists</mat-icon>
+        Projekt-Liste
+      </button>
 
-  </mat-menu>
+      <button mat-button [routerLink]="'login'" routerLinkActive="active" *ngIf="!isLoggedIn">
+        <mat-icon>login</mat-icon>
+       Login
+      </button>
+      <button mat-button  (click)="onLogout()"  [routerLink]="'logout'" routerLinkActive="active" *ngIf="isLoggedIn">
+        <mat-icon>logout</mat-icon>
+        Logout
+      </button>
 
-    <button mat-button [matMenuTriggerFor]="appMenu">
-      Menu
-      <mat-icon>menu</mat-icon>
-    </button>
+
     </mat-toolbar-row>
-  </mat-toolbar>
+    </mat-toolbar>
 </header>
 
 <main class="main" id="main">
+
   <router-outlet/>
 </main>
 

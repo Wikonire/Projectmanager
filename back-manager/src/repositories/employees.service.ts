@@ -1,21 +1,21 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import {Employee} from '../entities/employee.entity';
+import {EmployeeEntity} from '../entities/employee.entity';
 import {CreateEmployeeDto, UpdateEmployeeDto} from '../dtos/employee.dto';
 
 @Injectable()
 export class EmployeesService {
     constructor(
-        @InjectRepository(Employee)
-        private readonly employeeRepository: Repository<Employee>,
+        @InjectRepository(EmployeeEntity)
+        private readonly employeeRepository: Repository<EmployeeEntity>,
     ) {}
 
-    async findAll(): Promise<Employee[]> {
+    async findAll(): Promise<EmployeeEntity[]> {
         return this.employeeRepository.find({ relations: ['users', 'employeePmFunctions'] });
     }
 
-    async findOne(id: string): Promise<Employee> {
+    async findOne(id: string): Promise<EmployeeEntity> {
         const employee = await this.employeeRepository.findOne({
             where: { id },
             relations: ['users', 'employeePmFunctions'],
@@ -28,12 +28,12 @@ export class EmployeesService {
         return employee;
     }
 
-    async create(createEmployeeDto: CreateEmployeeDto): Promise<Employee> {
+    async create(createEmployeeDto: CreateEmployeeDto): Promise<EmployeeEntity> {
         const employee = this.employeeRepository.create(createEmployeeDto);
         return this.employeeRepository.save(employee);
     }
 
-    async update(id: string, updateEmployeeDto: UpdateEmployeeDto): Promise<Employee> {
+    async update(id: string, updateEmployeeDto: UpdateEmployeeDto): Promise<EmployeeEntity> {
         const employee = await this.findOne(id);
         Object.assign(employee, updateEmployeeDto);
         return this.employeeRepository.save(employee);

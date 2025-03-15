@@ -1,6 +1,6 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {RouterLink, RouterOutlet, Routes} from '@angular/router';
-import {CommonModule, NgForOf, NgOptimizedImage} from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
+import {CommonModule, NgOptimizedImage, registerLocaleData} from '@angular/common';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
@@ -9,6 +9,13 @@ import {HomeModule} from './home/home.module';
 import {LoginModule} from './login/login.module';
 import {ProjectListModule} from './project-list/project-list.module';
 import {ProjectDetailModule} from './project-detail/project-detail.module';
+import {AuthService} from '../shared/services/auth.service';
+import {StartModule} from './start/start.module';
+import {User} from '../shared/interfaces/user.model';
+import localeDeCh from '@angular/common/locales/de-CH';
+import {MatNativeDateModule} from '@angular/material/core';
+
+registerLocaleData(localeDeCh);
 
 @Component({
   selector: 'app-root',
@@ -25,23 +32,32 @@ import {ProjectDetailModule} from './project-detail/project-detail.module';
     HomeModule,
     LoginModule,
     ProjectListModule,
-    ProjectDetailModule
+    ProjectDetailModule,
+    RouterLinkActive,
+    StartModule,
+    MatNativeDateModule,
   ],
   templateUrl: './app.component.html',
   standalone: true,
   styleUrl: './app.component.scss'
 })
 
-export class AppComponent implements OnInit{
-  public title = 'front-manager';
-  sites = [
-    {path: 'home', title: 'Home', icon: 'home'},
-    {path: 'login', title: 'Login', icon: 'login'},
-    {path: 'project-list', title: 'Projekt-Liste', icon: 'lists'},
-  ];
-  ngOnInit(): void {
+export class AppComponent implements OnInit {
+  isLoggedIn: boolean = false;
+  private user: User | null = null;
 
-
+  constructor(private readonly authService: AuthService) {
   }
 
+  ngOnInit(): void {
+    this.authService.user$.subscribe(user => {
+      this.user = user;
+      this.isLoggedIn = this.user != null;
+    })
+    this.isLoggedIn = this.authService.isLoggedIn();
+  }
+
+  onLogout() {
+    this.authService.logout();
+  }
 }

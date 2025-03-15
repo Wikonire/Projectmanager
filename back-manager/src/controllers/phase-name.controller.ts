@@ -1,7 +1,6 @@
 import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import {PhaseNameService} from '../repositories/phase-name.service';
 import {PhaseName} from '../entities/phase-name.entity';
-import {CreatePhaseNameDto} from '../dtos/phase-name.dto';
 
 @Controller('phase-name')
 export class PhaseNameController {

@@ -8,6 +8,7 @@ export class AuthGuard implements CanActivate {
 
     canActivate(context: ExecutionContext): boolean {
         const requiredRoles = this.reflector.get<string[]>('roles', context.getHandler());
+        const isPublic = this.reflector.get<boolean>('isPublic', context.getHandler());
         const request = context.switchToHttp().getRequest();
         const authHeader = request.headers.authorization;
 

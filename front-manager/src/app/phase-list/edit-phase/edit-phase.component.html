@@ -1,68 +1,75 @@
 <h2 mat-dialog-title>Projektphase bearbeiten</h2>
-<form [formGroup]="phaseFormGroup" (ngSubmit)="onSave()" class="form-container">
 
-  <!--<mat-form-field class="example-full-width">
-    <mat-label>Number</mat-label>
-    <input type="text"
-           placeholder="Pick one"
-           aria-label="Number"
-           matInput
-           [formControl]="phaseFormGroup.get('phaseName')"
-           [matAutocomplete]="auto">
-    <mat-autocomplete #auto="matAutocomplete">
-      @for (option of filteredOptions | async; track option) {
-        <mat-option [value]="option">{{option}}</mat-option>
-      }
-    </mat-autocomplete>
-  </mat-form-field>-->
-
+<form *ngIf="phase && phaseFormGroup" [formGroup]="phaseFormGroup" (ngSubmit)="onSave()" class="form-container">
 
   <mat-form-field>
-    <mat-label>Phase Name</mat-label>
-
-
+    <mat-label>Name der Phase</mat-label>
+    <input matInput [formControlName]="'phaseNameControl'" [matAutocomplete]="phaseAuto">
+    <mat-autocomplete #phaseAuto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredPhaseNameOptions$ | async" [value]="option">
+        {{ option }}
+      </mat-option>
+    </mat-autocomplete>
   </mat-form-field>
 
   <mat-form-field>
-    <mat-label>Fortschritt</mat-label>
-    <input matInput type="number" formControlName="progress" min="0" max="100">
+    <mat-label>Status</mat-label>
+    <input matInput formControlName="phaseStatusControl" [matAutocomplete]="statusAuto">
+    <mat-autocomplete #statusAuto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredStatusNameOptions$ | async" [value]="option">
+        {{ option }}
+      </mat-option>
+    </mat-autocomplete>
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>Geplantes Startdatum</mat-label>
-    <input matInput [matDatepicker]="picker1" formControlName="plannedStartDate">
+    <input matInput [matDatepicker]="picker1" formControlName="plannedStartDateControl">
     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
     <mat-datepicker #picker1></mat-datepicker>
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>Geplantes Enddatum</mat-label>
-    <input matInput [matDatepicker]="picker2" formControlName="plannedEndDate">
+    <input matInput [matDatepicker]="picker2" formControlName="plannedEndDateControl">
     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
     <mat-datepicker #picker2></mat-datepicker>
   </mat-form-field>
 
   <mat-form-field>
-    <mat-label>Startdatum</mat-label>
-    <input matInput [matDatepicker]="picker3" formControlName="actualStartDate">
+    <mat-label>Effektives Startdatum</mat-label>
+    <input matInput [matDatepicker]="picker3" formControlName="actualStartDateControl">
     <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
     <mat-datepicker #picker3></mat-datepicker>
   </mat-form-field>
 
   <mat-form-field>
-    <mat-label>Enddatum</mat-label>
-    <input matInput [matDatepicker]="picker4" formControlName="actualEndDate">
+    <mat-label>Effektives Enddatum</mat-label>
+    <input matInput [matDatepicker]="picker4" formControlName="actualEndDateControl">
     <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
     <mat-datepicker #picker4></mat-datepicker>
   </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Status</mat-label>
-    <input matInput formControlName="status">
-  </mat-form-field>
+
+
+    <mat-form-field>
+      <mat-label>Fortschritt</mat-label>
+      <input matInput type="number" formControlName="progressControl" step="0.01">
+    </mat-form-field>
+
+
+  <mat-slider
+    showTickMarks discrete
+    [min]="0"
+    [max]="100"
+    [step]="1" [displayWith]="displayProgress">
+    <input matSliderThumb [value]="phaseFormGroup.get('progressControl')?.value||0.00" (valueChange)="onProgressChange($event)">
+  </mat-slider>
 
   <div class="button-group">
     <button mat-button (click)="onCancel()">Abbrechen</button>
-    <button mat-raised-button color="primary" type="submit" [disabled]="phaseFormGroup.invalid">Speichern</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="phaseFormGroup.invalid">
+      Speichern
+    </button>
   </div>
 </form>
