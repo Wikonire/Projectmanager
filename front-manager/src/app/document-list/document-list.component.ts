@@ -7,13 +7,12 @@ import { Document } from '../../shared/interfaces/document.model';
   templateUrl: './document-list.component.html',
   styleUrl: './document-list.component.scss'
 })
-export class DocumentListComponent implements OnInit, OnChanges {
+export class DocumentListComponent implements OnChanges {
   @Input() documents: Document[] = [];
-  @Input() dialogWidth: string = '500px';
+  @Input() dialogWidth: string = '90%';
   displayedColumns: string[] = ['title', 'createdAt', 'actions'];
 
   constructor(public dialog: MatDialog) {}
-  ngOnInit(): void {}
   ngOnChanges(changes: SimpleChanges): void {
     this.documents = changes['documents']?.currentValue;
     this.dialogWidth = changes['dialogWidth']?.currentValue;

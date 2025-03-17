@@ -14,6 +14,15 @@ import {StartModule} from './start/start.module';
 import {User} from '../shared/interfaces/user.model';
 import localeDeCh from '@angular/common/locales/de-CH';
 import {MatNativeDateModule} from '@angular/material/core';
+import {EmployeeListModule} from './employee-list/employee-list.module';
+import {
+  GanttItem,
+  NgxGanttComponent,
+  NgxGanttModule,
+  NgxGanttTableColumnComponent,
+  NgxGanttTableComponent
+} from '@worktile/gantt';
+import {GanttModule} from './gantt/gantt.module';
 
 registerLocaleData(localeDeCh);
 
@@ -36,6 +45,8 @@ registerLocaleData(localeDeCh);
     RouterLinkActive,
     StartModule,
     MatNativeDateModule,
+    EmployeeListModule,
+    GanttModule
   ],
   templateUrl: './app.component.html',
   standalone: true,
@@ -43,8 +54,9 @@ registerLocaleData(localeDeCh);
 })
 
 export class AppComponent implements OnInit {
+
   isLoggedIn: boolean = false;
-  private user: User | null = null;
+  private user: User | undefined = undefined;
 
   constructor(private readonly authService: AuthService) {
   }

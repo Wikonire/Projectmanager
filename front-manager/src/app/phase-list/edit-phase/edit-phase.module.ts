@@ -11,8 +11,8 @@ import {MatListModule} from '@angular/material/list';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 import {EditPhaseComponent} from './edit-phase.component';
-import {MatDialogModule, MatDialogTitle} from '@angular/material/dialog';
-import {MatSlider, MatSliderModule, MatSliderThumb} from '@angular/material/slider';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatSliderModule, MatSliderThumb} from '@angular/material/slider';
 
 @NgModule({
   declarations: [EditPhaseComponent],

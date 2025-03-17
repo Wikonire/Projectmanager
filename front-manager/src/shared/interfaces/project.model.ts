@@ -10,11 +10,13 @@ export interface Project {
   description: string;
   approvalDate?: Date;
   approvalSignature: string;
+  leader: {first_name: string, last_name:string}&string;
   progress: number;
   plannedStartDate: Date;
   plannedEndDate: Date;
   actualStartDate?: Date;
   actualEndDate?: Date ;
+  externalCosts?: {actualCost: number, costType: { name: string}}[] ;
   createdAt: string;
   priority?: Priority;
   status?: ProjectStatus;

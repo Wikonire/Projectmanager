@@ -1,1 +1,60 @@
-<p>document-dialog works!</p>
+<h2 mat-dialog-title>{{ data.title }}</h2>
+
+<mat-dialog-content class="full-width width500">
+  <dl>
+    <dt>Dokument wurde erstellt am:</dt>
+    <dd>{{ data.createdAt |date: 'EEEE, dd.MM.yyyy' }}</dd>
+  </dl>
+  <dl>
+    <dt>Dokument gehört zu:</dt>
+    <dd>
+      <span *ngIf="data && data.activity && data.activity.id">
+       Aktivität "{{ data.activity.title }}"
+      </span>
+      <span *ngIf="data && data.project && data.project.id">
+       Projekt "{{ data.project.title }}"
+      </span>
+
+      <span *ngIf="data && data.phase && data.phase.id">
+       Phase "{{ data.phase.title }}"
+      </span>
+    </dd>
+  </dl>
+  <h3>Inhalt:</h3>
+  <div class="full-width bordered">
+      <ng-container *ngIf="!isInEditMode; else inEditMode">
+    <app-markdown *ngIf="data" [data]="data.content" [truncateSize]="0"></app-markdown>
+
+  </ng-container>
+
+<ng-template #inEditMode>
+  <mat-form-field >
+    <mat-label>Titel</mat-label>
+    <input matInput placeholder="Titel" [(ngModel)]="data.title" [required]="true">
+  </mat-form-field>
+   <mat-form-field>
+     <mat-label>Pfad hier angeben</mat-label>
+    <input matInput placeholder="Pfad" [(ngModel)]="data.path">
+     <mat-hint>Optional, Beispiel: /home/user/documents/my-document.txt</mat-hint>
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <textarea matInput
+              [required]="true"
+              class="full-width"
+              cdkAutosizeMinRows="15"
+              cdkAutosizeMaxRows="22"
+              cdkTextareaAutosize placeholder="Dokumentinhalt"
+              [(ngModel)]="data.content"
+              type="text"></textarea>
+  </mat-form-field>
+</ng-template>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions *ngIf="!isInEditMode">
+  <button mat-button  (click)="isInEditMode = true">Bearbeiten</button>
+  <button mat-button  (click)="this.dialogRef.close()">Schliessen</button>
+</mat-dialog-actions>
+<mat-dialog-actions *ngIf="isInEditMode">
+  <button mat-button (click)="saveDocument(data)">Speichern</button>
+  <button mat-button (click)="isInEditMode = false">Abbrechen</button>
+</mat-dialog-actions>

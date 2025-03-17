@@ -13,7 +13,6 @@ export class PriorityColorService {
     if (projects.length === 0) {}
     // @ts-ignore
     this.uniquePriorities = [...new Set(projects.map(p => p.priority.name))].sort();
-    console.log(this.uniquePriorities);
 
     // Farben automatisch generieren von Rot (wichtig) bis Blau (unwichtig)
     const colorGradient = this.generateColorGradient("#d32f2b", "#1976d2", this.uniquePriorities.length);

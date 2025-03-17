@@ -1,5 +1,5 @@
 <ng-container *ngIf="documents.length > 0">
-  <ng-container *ngFor="let document of documents">
+
     <mat-table [dataSource]="documents" class="mat-elevation-z8">
       <ng-container matColumnDef="title">
         <mat-header-cell *matHeaderCellDef> Titel </mat-header-cell>
@@ -23,7 +23,6 @@
       <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
     </mat-table>
   </ng-container>
-</ng-container>
 <ng-container *ngIf="documents.length === 0">
   <p>Keine Dokumente vorhanden</p>
 </ng-container>

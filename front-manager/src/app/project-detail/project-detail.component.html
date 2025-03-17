@@ -1,7 +1,7 @@
 <h2>Projektdetails</h2>
 <mat-card class="container">
 
-  <mat-card *ngIf="project && !isProjectEditing">
+  <ng-container *ngIf="project && !isProjectEditing">
     <span>
       <h2>Projekt: {{ project.title }}</h2>
     <dl>
@@ -21,18 +21,52 @@
       <dd>{{ project.methodology?.name }}</dd>
 
       <dt>Geplante Dauer:</dt>
-      <dd>{{ project.plannedStartDate|date:'EEEE, dd.MM.yyyy' }} – {{ project.plannedEndDate|date:'EEEE, dd.MM.yyyy'}}</dd>
+      <dd>{{ project.plannedStartDate|date:'EEEE, dd.MM.yyyy' }} – {{ (project.plannedEndDate|date:'EEEE, dd.MM.yyyy')||'Kein Startdatum'}}</dd>
 
       <dt>Durchführungsdaten:</dt>
-      <dd>{{ project.actualStartDate|date:'EEEE, dd.MM.yyyy' }} – {{ project.actualEndDate|date:'EEEE, dd.MM.yyyy'}}</dd>
-    <dt>
+      <dd>{{ project.actualStartDate|date:'EEEE, dd.MM.yyyy' }} – {{ (project.actualEndDate|date:'EEEE, dd.MM.yyyy')||'Kein Enddatum'}}</dd>
+
+      <dt>Bestätigungsdatum:</dt>
+      <dd>{{ (project.approvalDate|date:'EEEE, dd.MM.yyyy' ) ||'Noch keine Bestätigung'}}</dd>
+
+       <dt *ngIf="project && project?.leader && project.leader.first_name">
+      Geleitet von:
+    </dt>
+      <dd class="leader-label">
+       <span *ngIf="project && project?.leader && project.leader.first_name">
+           {{ project.leader.first_name}}
+       </span>
+        <span *ngIf="project && project?.leader && project.leader.last_name; else noLeader">
+            {{ project.leader.last_name}}
+        </span>
+        <ng-template #noLeader>
+          <span>
+          Keine Leitung eingetragen
+       </span>
+        </ng-template>
+
+      </dd>
+
+      <dt>Aktuelle Kosten in CHF:</dt>
+      <dd *ngIf="project && project.externalCosts && project.externalCosts.length===0">{{'Noch keine Kosten erfasst'}}</dd>
+      <dd *ngIf="project && project.externalCosts && project.externalCosts.length>0">
+        <ul>
+          <li *ngFor="let cost of project?.externalCosts">
+            {{
+            cost.actualCost + ' CHF' + ' - ' + cost?.costType?.name + ' - ' + cost.costType.name
+            }}
+          </li>
+        </ul>
+        {{'Noch keine Bestätigung'}}</dd>
+      <dt>
       Fortschritt:
     </dt>
       <dd class="progress-label">
         {{ project.progress }} %
       </dd>
-    </dl>
     <mat-progress-bar mode="determinate" [value]="project.progress"></mat-progress-bar>
+    </dl>
+
     </span>
     <mat-accordion>
       <mat-expansion-panel>
@@ -63,11 +97,11 @@
     <button *ngIf="!isProjectEditing" mat-raised-button color="primary" (click)="toggleEdit()">Bearbeiten</button>
     <button mat-button color="warn"  (click)="openDeleteConfirmationDialog()">Projekt löschen</button>
   </mat-card-actions>
-  </mat-card>
+  </ng-container>
 
 
   <!-- Bearbeitungsformular -->
-  <mat-card *ngIf="isProjectEditing">
+  <ng-container *ngIf="isProjectEditing">
     <h3>Projekt bearbeiten</h3>
     <form [formGroup]="editForm">
       <mat-form-field class="full-width">
@@ -145,6 +179,6 @@
       <button mat-button (click)="cancelEdit()">Abbrechen</button>
       <button mat-button color="warn"  (click)="openDeleteConfirmationDialog()">Projekt löschen</button>
     </form>
-  </mat-card>
+</ng-container>
 </mat-card>
 

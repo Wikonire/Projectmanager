@@ -10,7 +10,7 @@
     <mat-toolbar-row role="navigation">
       <button mat-button [routerLink]="'home'" routerLinkActive="active" *ngIf="isLoggedIn">
         <mat-icon>home</mat-icon>
-        Account
+        Home
       </button>
       <button mat-button [routerLink]="'project-list'" routerLinkActive="active" *ngIf="isLoggedIn">
         <mat-icon>lists</mat-icon>
@@ -26,12 +26,22 @@
         Logout
       </button>
 
+      <button mat-button  [routerLink]="'employees'" routerLinkActive="active" *ngIf="isLoggedIn">
+        <mat-icon>people</mat-icon>
+        Mitarbeitende
+      </button>
+
+      <button mat-button  [routerLink]="'gantt'" routerLinkActive="active" *ngIf="isLoggedIn">
+        <mat-icon>star</mat-icon>
+        Gantt
+      </button>
 
     </mat-toolbar-row>
     </mat-toolbar>
 </header>
 
 <main class="main" id="main">
+
 
   <router-outlet/>
 </main>

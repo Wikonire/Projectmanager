@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PhaseListComponent } from './phase-list.component';
+import {PhaseListModule} from './phase-list.module';
 
 describe('PhaseListComponent', () => {
   let component: PhaseListComponent;
@@ -8,7 +9,10 @@ describe('PhaseListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PhaseListComponent]
+      declarations: [PhaseListComponent],
+      imports: [
+        PhaseListModule
+      ]
     })
     .compileComponents();
 

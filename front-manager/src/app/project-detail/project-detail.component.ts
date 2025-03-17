@@ -1,5 +1,5 @@
 import {Component, model, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 import {Project} from '../../shared/interfaces/project.model';
@@ -23,7 +23,8 @@ export class ProjectDetailComponent implements OnInit {
               private projectService: ProjectService,
               private fb: FormBuilder,
               private matDialog: MatDialog,
-              private snackBarService: SnackBarService
+              private snackBarService: SnackBarService,
+              private router:Router
   ) {
   }
 
@@ -40,6 +41,7 @@ export class ProjectDetailComponent implements OnInit {
       next: (data: Project) => {
         this.project = data;
         this.initializeForm();
+        console.log(this.project.leader)
       }, error: (error: any) => console.error('Fehler beim Laden des Projekts:', error)
     });
   }
@@ -75,6 +77,7 @@ export class ProjectDetailComponent implements OnInit {
         next: () => {
           this.snackBarService.showSuccess('gespeichert');
           this.isProjectEditing = false;
+          this.router.navigate([`/project-list`]);
         },
         error: (error) => {
           this.snackBarService.showError(error, 'Speichern');
@@ -101,6 +104,7 @@ export class ProjectDetailComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined && result === true) {
         this.deleteProject(this.project);
+        this.router.navigate(['/project-list']);
         dialogRef.close();
       }
     });

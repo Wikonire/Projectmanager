@@ -1,1 +1,15 @@
-<p>approval works!</p>
+<ng-template #loading>
+  <mat-spinner></mat-spinner>
+</ng-template>
+
+<ng-container *ngIf="user">
+  <p>Hallo {{user.name}}</p>
+  <p>Email: {{user.email}}</p>
+  <p>Rolle: <span *ngFor="let role of user?.roles; let last = last">{{role?.name}}
+    <span *ngIf="!last">, </span>
+  </span>
+  </p>
+</ng-container>
+
+
+

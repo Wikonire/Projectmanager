@@ -1,0 +1,11 @@
+<div class="container">
+  <h2>Gantt</h2>
+  <ngx-gantt #gantt [items]="items">
+    <ngx-gantt-table>
+      <ngx-gantt-column name="gantt" width="400px">
+        <ng-template #cell let-item="item"> {{ item.title }} </ng-template>
+      </ngx-gantt-column>
+    </ngx-gantt-table>
+  </ngx-gantt>
+
+</div>

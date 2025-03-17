@@ -10,7 +10,7 @@ import {MarkdownComponent} from './document-dialog/markdown/markdown.component';
 
 
 @NgModule({
-  declarations: [DocumentListComponent, MarkdownComponent],
+  declarations: [DocumentListComponent],
   imports: [
     CommonModule,
     EditDocumentModule,

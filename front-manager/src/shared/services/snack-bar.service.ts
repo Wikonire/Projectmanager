@@ -9,7 +9,7 @@ export class SnackBarService {
   constructor(private snackBar: MatSnackBar) { }
 
   showError(error: any, action: 'Löschen'|'Speichern'|'Laden'):void {
-    console.error('Fehler beim Löschen der Projekte:', error);
+    console.error(`Fehler beim ${action} der Projekte:`, error);
     this.snackBar.open(
       `Fehler beim ${action} der Projekte. Bitte versuche es erneut.`,
       'Schliessen',

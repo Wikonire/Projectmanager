@@ -4,7 +4,7 @@
     <mat-card class="card">
       <mat-card-title>Willkommen auf deiner persönlichen Seite</mat-card-title>
       <mat-card-content>
-        <app-approval></app-approval>
+        <app-approval *ngIf="authService.user$ | async as user" [user]="user"></app-approval>
       </mat-card-content>
     </mat-card>
   </mat-grid-tile>

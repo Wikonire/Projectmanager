@@ -1,19 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MarkdownComponent } from './markdown.component';
-import {MarkdownModule} from './markdown.module';
+import { GanttComponent } from './gantt.component';
 
-describe('MarkdownComponent', () => {
-  let component: MarkdownComponent;
-  let fixture: ComponentFixture<MarkdownComponent>;
+describe('GanttComponent', () => {
+  let component: GanttComponent;
+  let fixture: ComponentFixture<GanttComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MarkdownModule]
+      imports: [GanttComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(MarkdownComponent);
+    fixture = TestBed.createComponent(GanttComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

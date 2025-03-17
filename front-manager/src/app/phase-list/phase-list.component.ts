@@ -6,13 +6,14 @@ import {MatSort, Sort} from '@angular/material/sort';
 import {ProjectService} from '../../shared/services/project.service';
 import {ProjectPhaseService} from '../../shared/services/project-phase.service';
 import {SnackBarService} from '../../shared/services/snack-bar.service';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-phase-list',
   templateUrl: './phase-list.component.html',
   styleUrl: './phase-list.component.scss'
 })
-export class PhaseListComponent  {
+export class PhaseListComponent implements OnInit  {
   @Input() data: ProjectPhase[] = []
   @Input() popupWidth:string = '800px';
   @Input() editMode: boolean = false;
@@ -21,7 +22,16 @@ export class PhaseListComponent  {
 
   @ViewChild(MatSort) sort!: MatSort;
   constructor(private dialog: MatDialog, private phaseService: ProjectPhaseService,
-              private snackBarService: SnackBarService) {
+              private snackBarService: SnackBarService, private activeRoute : ActivatedRoute,
+              private router:Router) {
+  }
+  projectId:string|null = null;
+
+  ngOnInit(): void {
+    this.activeRoute.paramMap.subscribe(params => {
+      this.projectId = params.get('id');
+    });
+
   }
 
 
@@ -38,17 +48,15 @@ export class PhaseListComponent  {
        this.phaseService.updatePhase(result).subscribe(
          {
            next: () => {
+
              this.snackBarService.showSuccess('gespeichert');
+               this.router.navigate([`/projects/${this.projectId}`]);
            },
            error: (error) => {
              this.snackBarService.showError(error, 'Speichern');
            }
          }
        )
-
-        console.log('Dialog geschlossen mit Daten:', result);
-      } else {
-        console.log('Dialog wurde ohne Änderungen geschlossen.');
       }
     });
   }

@@ -19,4 +19,5 @@ export interface ProjectPhase {
   actualEndDate?: Date;
   phaseStatus: PhaseStatus;
   documents?: Document[];
+  activities?: any[];
 }

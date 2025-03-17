@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import {map, Observable, throwError} from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Project } from '../interfaces/project.model';
 
@@ -31,7 +31,10 @@ export class ProjectService {
   /** Ein einzelnes Projekt abrufen */
   getById(id: string): Observable<Project> {
     return this.http.get<Project>(`${this.apiUrl}/${id}`)
-      .pipe(catchError(this.handleError));
+      .pipe(catchError(this.handleError), map(project => {
+        console.log(project)
+        return project;
+      }));
   }
 
   /** Neues Projekt erstellen */

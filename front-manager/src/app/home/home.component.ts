@@ -8,14 +8,7 @@ import {AuthService} from '../../shared/services/auth.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit{
-  constructor(private readonly authService: AuthService) {}
-
-  ngOnInit(): void {
-        this.authService.user$.subscribe(user => {
-
-        })
-    }
-
+export class HomeComponent {
+  constructor(public readonly authService: AuthService) {}
 
 }

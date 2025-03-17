@@ -7,21 +7,23 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatSortModule} from '@angular/material/sort';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatTooltip} from '@angular/material/tooltip';
+import {MatPaginator} from '@angular/material/paginator';
 
 
 
 @NgModule({
   declarations: [OverviewComponent],
-  imports: [
-    CommonModule,
-    MatTableModule,
-    MatButtonModule,
-    MatIconModule,
-    MatSortModule,
-    MatCheckboxModule,
-    MatTooltip,
-    TitleCasePipe
-  ],
+    imports: [
+        CommonModule,
+        MatTableModule,
+        MatButtonModule,
+        MatIconModule,
+        MatSortModule,
+        MatCheckboxModule,
+        MatTooltip,
+        TitleCasePipe,
+        MatPaginator
+    ],
   exports: [OverviewComponent]
 })
 export class OverviewModule { }

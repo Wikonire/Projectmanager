@@ -1,4 +1,4 @@
-import {Component, EnvironmentInjector, inject, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Project, ProjectOverviewData} from '../../shared/interfaces/project.model';
 import {PriorityColorService} from '../../shared/services/priority-color.service';
 import {AccessibleTextColorService} from '../../shared/services/accessible-text-color.service';
@@ -9,13 +9,19 @@ import {MatDialog} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {OverviewComponent} from '../overview/overview.component';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {GANTT_GLOBAL_CONFIG, GanttGlobalConfig, GanttI18nLocale} from '@worktile/gantt';
 
-
+const config:GanttGlobalConfig = {
+  locale: GanttI18nLocale.deDe,
+  dateOptions: {
+    weekStartsOn: 1
+  },
+};
 
 @Component({
   selector: 'app-project-list',
   templateUrl: './project-list.component.html',
-  styleUrls: ['./project-list.component.scss']
+  styleUrls: ['./project-list.component.scss'],
 })
 export class ProjectListComponent implements OnInit {
   @ViewChild(OverviewComponent) overviewComponent!: OverviewComponent<ProjectOverviewData>;
@@ -27,6 +33,7 @@ export class ProjectListComponent implements OnInit {
     {name: 'plannedStartDate', label: 'Geplantes Startdatum', type: 'date'},
     {name: 'plannedEndDate', label: 'Geplantes Enddatum', type: 'date'},
     {name: 'priority', label: 'Priorität', type: undefined},
+    {name: 'leader', label: 'Geleitet von', type: undefined},
     {name: 'detail', label: 'Detailsicht', type: undefined},
   ];
   title = 'Projekt-Liste';
@@ -75,10 +82,11 @@ export class ProjectListComponent implements OnInit {
 
   private loadProjects() {
     this.projectService.getAllActive().subscribe((projects: Project[]) => {
+      console.log('Projekte:', projects);
       this.projects = projects;
       const priorityColors = this.priorityColorService.getPriorityColors(projects);
 
-      this.projectOverviewData = projects.map(project => {
+      this.projectOverviewData = projects.map((project:Project) => {
         const bgColor = project?.priority?.name && priorityColors[project?.priority?.name] || '#ccc';
         const textColor = this.accessibleTextColorService.getAccessibleTextColor(bgColor);
 
@@ -89,6 +97,7 @@ export class ProjectListComponent implements OnInit {
           progress: project.progress ?? 0,
           plannedStartDate: project.plannedStartDate,
           plannedEndDate: project.plannedEndDate,
+          leader: `${project?.leader?.first_name??''} ${project?.leader?.last_name??''}`,
           priority: {
             name: project?.priority?.name,
             style: {

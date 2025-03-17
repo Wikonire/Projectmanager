@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @use '@angular/material' as mat;
+@use "@worktile/gantt/styles/index.scss";
 @include mat.core();
-
 
 $my-theme: mat.define-theme((
   color: (
@@ -15,18 +15,23 @@ $my-theme: mat.define-theme((
   --mdc-slider-handle-size: 32px; /* Thumb vergrößern */
   --mdc-slider-label-text-size: 18px; /* Textgröße im Label */
   }
-
+.mat-form-field {
+  --mat-input-background: white;
+  --mdc-filled-text-field-container-color: white;
+  }
 html {
   @include mat.all-component-themes($my-theme);
   }
 body { margin: 0; font-family: Roboto, "Arial", sans-serif; }
+
+
 .full-width {
   width: 100%;
   margin-bottom: 15px;
   }
 pre {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
-  background-color: lightgray;
+  background-color: #ededed;
   padding: 10px;
 
   }

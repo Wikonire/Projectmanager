@@ -13,8 +13,8 @@ import {Role} from '../interfaces/role.model';
 export class AuthService {
   private apiUrl = `http://localhost:3000/auth`;
   private tokenKey = 'authToken';
-  private userSubject = new BehaviorSubject<User | null>(null);
-  user$ = this.userSubject.asObservable();
+  private userSubject = new BehaviorSubject<User|undefined>(undefined);
+  user$:Observable<User|undefined> = this.userSubject.asObservable();
 
   constructor(private readonly http: HttpClient, private readonly router: Router) {
     this.loadUserIdFromStorage();
@@ -36,18 +36,15 @@ export class AuthService {
   }
 
   private storeUser(response: { access_token: string }): void {
-    const decoded = jwtDecode<JwtPayload>(response.access_token) as { username: string, sub: string, exp: number };
+    const decoded = jwtDecode<JwtPayload>(response.access_token) as { username: string, sub: string, exp: number, roles: Role[] };
     localStorage.setItem(this.tokenKey, response.access_token);
 
-    this.http.get<User>(`http://localhost:3000/users/${decoded.sub}`).subscribe(
-      (user) => {
-        this.userSubject.next(user);
-      },
-      (error) => {
-        console.error('Fehler beim Abrufen des Users:', error);
-        this.logout();
-      }
-    );
+    const user: User = {
+      id: decoded.sub,
+      name: decoded.username,
+      roles: decoded.roles
+    };
+    this.userSubject.next(user);
   }
 
   /**
@@ -55,7 +52,7 @@ export class AuthService {
    */
   logout(): void {
     localStorage.removeItem(this.tokenKey);
-    this.userSubject.next(null);
+    this.userSubject.next(undefined);
     this.router.navigate(['/login']);
   }
 
@@ -72,17 +69,17 @@ export class AuthService {
    */
   private loadUserIdFromStorage(): void {
     const token = localStorage.getItem(this.tokenKey);
-    if (token) {
-      this.storeUser({access_token: token})
+    if (!token) {
+      return; // Kein Token im Speicher
     }
-  }
 
-  /**
-   * Gibt den aktuellen Benutzer zurück.
-   * @returns Der eingeloggte User oder `null`.
-   */
-  getUser(): User | null {
-    return this.userSubject.value;
+    try {
+      this.storeUser({ access_token: token });
+    } catch (error) {
+      console.error('Invalid token provided in localStorage:', error);
+      // Entfernt ungültige Token
+      localStorage.removeItem(this.tokenKey);
+    }
   }
 
   /**
@@ -91,15 +88,6 @@ export class AuthService {
    */
   getToken(): string | null {
     return localStorage.getItem(this.tokenKey);
-  }
-
-  getCurrentRoles(): Role[] {
-    const response = this.getToken();
-    if (response) {
-      const decoded = jwtDecode<JwtPayload>(response) as { username: string, sub: string, exp: number, roles: Role[] };
-      return decoded.roles;
-    }
-    return []
   }
 
 }
