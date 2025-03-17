@@ -2,17 +2,27 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import {EmployeeEntity} from '../entities/employee.entity';
-import {CreateEmployeeDto, UpdateEmployeeDto} from '../dtos/employee.dto';
+import {CreateEmployeeDto, CreateEmployeeUserDto, UpdateEmployeeDto} from '../dtos/employee.dto';
+import {UserEntity} from '../entities/user.entity';
 
 @Injectable()
 export class EmployeesService {
     constructor(
+        @InjectRepository(UserEntity)
+        private readonly userRepository: Repository<UserEntity>,
         @InjectRepository(EmployeeEntity)
         private readonly employeeRepository: Repository<EmployeeEntity>,
     ) {}
 
-    async findAll(): Promise<EmployeeEntity[]> {
-        return this.employeeRepository.find({ relations: ['users', 'employeePmFunctions'] });
+    async findAll(): Promise<any> {
+        /*const employees = await this.employeeRepository.find({ relations: ['user',
+                'employeePmFunctions', 'employeePmFunctions'] });
+        employees.map(employee => {
+            console.log(employee.employeePmFunctions)});*/
+
+       return this.userRepository.find({ relations: ['employee', 'employee.employeePmFunctions.pmFunction']});
+
+
     }
 
     async findOne(id: string): Promise<EmployeeEntity> {

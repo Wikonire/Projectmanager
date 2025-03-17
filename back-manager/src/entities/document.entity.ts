@@ -38,7 +38,7 @@ export class Document {
     @BeforeInsert()
     @BeforeUpdate()
     validateRelations() {
-        const assignedRelations = [this.project, this.phase, this.activity].filter((relation) => relation !== undefined);
+        const assignedRelations = [this.project, this.phase, this.activity].filter((relation) => relation !== null);
         if (assignedRelations.length !== 1) {
             throw new BadRequestException(
                 'Ein Dokument muss genau einem Projekt, einer Phase oder einer Aktivität zugewiesen sein.'

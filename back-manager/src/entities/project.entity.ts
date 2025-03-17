@@ -5,7 +5,7 @@ import {
     Entity,
     JoinColumn, JoinTable, ManyToMany,
     ManyToOne,
-    OneToMany,
+    OneToMany, OneToOne,
     PrimaryGeneratedColumn
 } from 'typeorm';
 import { ProjectPriority } from './project-priority.entity';
@@ -14,6 +14,8 @@ import { ProjectPhase } from './project-phase.entity';
 import { Document } from './document.entity';
 import {MethodologyEntity} from './methodology.entity';
 import {ExternalCostsEntity} from './external-costs.entity';
+import {EmployeeEntity} from './employee.entity';
+import {UserEntity} from './user.entity';
 
 @Entity('project')
 @Check('progress >= 0 AND progress <= 100')
@@ -36,6 +38,10 @@ export class ProjectEntity {
     @ManyToOne(() => ProjectPriority, { onDelete: 'SET NULL'})
     @JoinColumn({ name: 'priority_id' })
     priority: ProjectPriority;
+
+    @ManyToOne(() => EmployeeEntity, (employee) => employee.projectsToLead, { nullable: true, onDelete: 'SET NULL' })
+    @JoinColumn({ name: 'leaderId' })
+    leader: EmployeeEntity;
 
     @ManyToOne(() => ProjectStatus, { onDelete: 'SET NULL' })
     @JoinColumn({ name: 'status_id'})

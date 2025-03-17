@@ -126,21 +126,25 @@ EXECUTE FUNCTION update_phase_progress();
                                                      FROM phase_name),
                                        status_ids AS (SELECT id, name FROM activity_status)
                                   INSERT
-                                  INTO activity(title, progress, estimation, "plannedStartDate", "plannedEndDate",
+                                  INTO activity(title, progress, estimation, 
+                                                "plannedStartDate", "plannedEndDate",
                                                 "actualStartDate",
                                                 "actualEndDate", phase_id, activity_status_id)
-                                  VALUES ('Projekt-Briefing erstellen', 0, 4, NOW(), NOW() + INTERVAL '2 days', NULL,
-                                          NULL,
+                                  VALUES ('Projekt-Briefing erstellen', 0, 4, NOW(), NOW() + INTERVAL '2 days',
+                                          NOW() + INTERVAL '3 days',
+                                          NOW() + INTERVAL '9 days',
                                           (SELECT id FROM project_phase ORDER BY random() LIMIT 1),
                                           (SELECT id FROM status_ids WHERE name = 'Geplant')),
 
                                          ('Stakeholder-Interviews führen', 10, 6, NOW(), NOW() + INTERVAL '3 days',
-                                          NULL, NULL,
+                                          NOW() + INTERVAL '2 days',
+                                          NOW() + INTERVAL '3 days',
                                           (SELECT id FROM project_phase ORDER BY random() LIMIT 1),
                                           (SELECT id FROM status_ids WHERE name = 'In Bearbeitung')),
 
-                                         ('Erste Wireframes erstellen', 20, 8, NOW(), NOW() + INTERVAL '5 days', NULL,
-                                          NULL,
+                                         ('Erste Wireframes erstellen', 20, 8, NOW(), NOW() + INTERVAL '5 days',
+                                          NOW() - INTERVAL '6 days',
+                                          NOW() + INTERVAL '9 days',
                                           (SELECT id FROM project_phase ORDER BY random() LIMIT 1),
                                           (SELECT id FROM status_ids WHERE name = 'In Bearbeitung')),
 
@@ -270,26 +274,26 @@ EXECUTE FUNCTION update_phase_progress();
         `);
 
         await queryRunner.query(`
-            INSERT INTO pm_user (username, email, password, "createdAt")
+            INSERT INTO pm_user (id, username, email, password, "createdAt")
             VALUES 
-                ('ada', 'ada@example.com', crypt('ada!', gen_salt('bf')), NOW()),
-                ('skywalker', 'jedi@example.com', crypt('UseTheForce!', gen_salt('bf')), NOW()),
-                ('cmarvel', 'carol@example.com', crypt('HigherFurtherFaster!', gen_salt('bf')), NOW()),
-                ('aturing', 'alan@example.com', crypt('TuringComplete!', gen_salt('bf')), NOW()),
-                ('mcurie', 'marie@example.com', crypt('RadiationRocks!', gen_salt('bf')), NOW()),
-                ('fkahlo', 'frida@example.com', crypt('VivaLaVida!', gen_salt('bf')), NOW())
+                ('45e08942-01e0-4cb2-b994-97348255e0ea', 'ada', 'ada@example.com', crypt('ada!', gen_salt('bf')), NOW()),
+                (uuid_generate_v4(), 'skywalker', 'jedi@example.com', crypt('UseTheForce!', gen_salt('bf')), NOW()),
+                (uuid_generate_v4(),'cmarvel', 'carol@example.com', crypt('HigherFurtherFaster!', gen_salt('bf')), NOW()),
+                (uuid_generate_v4(),'aturing', 'alan@example.com', crypt('TuringComplete!', gen_salt('bf')), NOW()),
+                (uuid_generate_v4(),'mcurie', 'marie@example.com', crypt('RadiationRocks!', gen_salt('bf')), NOW()),
+                (uuid_generate_v4(),'fkahlo', 'frida@example.com', crypt('VivaLaVida!', gen_salt('bf')), NOW())
             ON CONFLICT (email) DO NOTHING;
         `);
 
         await queryRunner.query(`
             INSERT
-            INTO employee(last_name, first_name, created_at, "userId")
-            VALUES ('Lovelace', 'Ada', now(), (SELECT id FROM pm_user WHERE username = 'ada')),
-                   ('Skywalker', 'Mx. Jedi', now(), (SELECT id FROM pm_user WHERE username = 'skywalker')),
-                   ('Marvel', 'Carol', now(), (SELECT id FROM pm_user WHERE username = 'cmarvel')),
-                   ('Turing', 'Alan', now(), (SELECT id FROM pm_user WHERE username = 'aturing')),
-                   ('Curie', 'Marie', now(), (SELECT id FROM pm_user WHERE username = 'mcurie')),
-                   ('Kahlo', 'Frida', now(), (SELECT id FROM pm_user WHERE username = 'fkahlo'))
+            INTO employee(id, last_name, first_name, created_at, "userId")
+            VALUES ('2c78d5af-9b6f-4423-a189-836a0bce388c','Lovelace', 'Ada', now(), (SELECT id FROM pm_user WHERE username = 'ada')),
+                   ('40c15c2c-a56e-4399-9d67-f223fc240f59','Skywalker', 'Mx. Jedi', now(), (SELECT id FROM pm_user WHERE username = 'skywalker')),
+                   ('69f1c1ac-30b2-42a3-b1e4-30e7e150488d','Marvel', 'Carol', now(), (SELECT id FROM pm_user WHERE username = 'cmarvel')),
+                   ('55011b44-3dc9-41f6-abc0-a126cbda29f6','Turing', 'Alan', now(), (SELECT id FROM pm_user WHERE username = 'aturing')),
+                   ('b509c3ae-47d8-4081-b448-7c96cd826af6','Curie', 'Marie', now(), (SELECT id FROM pm_user WHERE username = 'mcurie')),
+                   ('543a7a55-7e92-444b-94a2-97962276dbf2','Kahlo', 'Frida', now(), (SELECT id FROM pm_user WHERE username = 'fkahlo'))
         `)
         await queryRunner.query(`
             INSERT INTO user_role (user_id, role_id)
@@ -407,7 +411,7 @@ EXECUTE FUNCTION update_phase_progress();
 
             INSERT INTO project (title, description, "approvalDate", "approvalSignature", progress,
                                  "plannedStartDate", "plannedEndDate", "actualStartDate", "actualEndDate", "createdAt",
-                                 priority_id, status_id, methodology_id)
+                                 priority_id, status_id, methodology_id, "leaderId")
             VALUES ('Barrierefreie Webplattform',
                     'Entwicklung einer zugänglichen Plattform zur Projektverwaltung für alle Nutzer*innen.',
                     '2024-02-10', 'Projektleitung', 15.00,
@@ -417,7 +421,9 @@ EXECUTE FUNCTION update_phase_progress();
                     (SELECT id
                      FROM methodology
                      WHERE name = 'IPMA'
-                     LIMIT 1)),
+                     LIMIT 1),
+                    '2c78d5af-9b6f-4423-a189-836a0bce388c'
+                   ),
 
                    ('Automatisierte Barrierefreiheits-Tests',
                     'Integration von Accessibility-Tests in CI/CD-Pipelines zur frühzeitigen Erkennung von Problemen.',
@@ -425,7 +431,8 @@ EXECUTE FUNCTION update_phase_progress();
                     '2024-03-10', '2024-10-01', '2024-04-01', NULL, NOW(),
                     (SELECT id FROM project_priority ORDER BY random() LIMIT 1),
                     (SELECT id FROM project_status ORDER BY random() LIMIT 1),
-                    (SELECT id FROM methodology ORDER BY random() LIMIT 1)),
+                    (SELECT id FROM methodology ORDER BY random() LIMIT 1)
+                        ,'2c78d5af-9b6f-4423-a189-836a0bce388c'),
 
                    ('KI-gestützte Accessibility',
                     'Entwicklung eines KI-Systems zur automatisierten Analyse von Barrierefreiheits-Standards.',
@@ -433,7 +440,8 @@ EXECUTE FUNCTION update_phase_progress();
                     '2024-01-20', '2024-09-15', '2024-02-10', NULL, NOW(),
                     (SELECT id FROM project_priority ORDER BY random() LIMIT 1),
                     (SELECT id FROM project_status ORDER BY random() LIMIT 1),
-                    (SELECT id FROM methodology ORDER BY random() LIMIT 1)),
+                    (SELECT id FROM methodology ORDER BY random() LIMIT 1),
+                    '2c78d5af-9b6f-4423-a189-836a0bce388c'),
 
                    ('Digitale Inklusion für Behörden',
                     'Entwicklung einer digitalen Infrastruktur für barrierefreie Verwaltungsservices.',
@@ -441,7 +449,8 @@ EXECUTE FUNCTION update_phase_progress();
                     '2024-04-15', '2024-12-20', NULL, NULL, NOW(),
                     (SELECT id FROM project_priority ORDER BY random() LIMIT 1),
                     (SELECT id FROM project_status ORDER BY random() LIMIT 1),
-                    (SELECT id FROM methodology ORDER BY random() LIMIT 1)),
+                    (SELECT id FROM methodology ORDER BY random() LIMIT 1),
+                    Null),
 
                    ('Feministische IT-Konzepte',
                     'Ein Framework für gendergerechte und inklusive IT-Strukturen in Unternehmen.',
@@ -449,7 +458,8 @@ EXECUTE FUNCTION update_phase_progress();
                     '2024-03-01', '2024-11-30', '2024-04-05', '2024-07-01', NOW(),
                     (SELECT id FROM project_priority ORDER BY random() LIMIT 1),
                     (SELECT id FROM project_status ORDER BY random() LIMIT 1),
-                    (SELECT id FROM methodology ORDER BY random() LIMIT 1)),
+                    (SELECT id FROM methodology ORDER BY random() LIMIT 1),
+                    '2c78d5af-9b6f-4423-a189-836a0bce388c'),
 
                    ('Nachhaltige IT-Architekturen',
                     'Reduktion des CO₂-Fußabdrucks durch nachhaltige IT-Entwicklung und Green Computing.',
@@ -457,7 +467,8 @@ EXECUTE FUNCTION update_phase_progress();
                     '2024-05-15', '2025-02-01', NULL, NULL, NOW(),
                     (SELECT id FROM project_priority ORDER BY random() LIMIT 1),
                     (SELECT id FROM project_status ORDER BY random() LIMIT 1),
-                    (SELECT id FROM methodology ORDER BY random() LIMIT 1)),
+                    (SELECT id FROM methodology ORDER BY random() LIMIT 1)
+                       , '2c78d5af-9b6f-4423-a189-836a0bce388c'),
 
                    ('Inklusive KI-Modelle',
                     'Erforschung und Entwicklung von KI-Systemen mit Fokus auf barrierefreie Nutzung.',
@@ -465,7 +476,8 @@ EXECUTE FUNCTION update_phase_progress();
                     '2024-06-10', '2025-06-30', NULL, NULL, NOW(),
                     (SELECT id FROM project_priority ORDER BY random() LIMIT 1),
                     (SELECT id FROM project_status ORDER BY random() LIMIT 1),
-                    (SELECT id FROM methodology ORDER BY random() LIMIT 1)),
+                    (SELECT id FROM methodology ORDER BY random() LIMIT 1),
+                    NULL),
 
                    ('Cybersecurity & feministische IT',
                     'Entwicklung von Datenschutz- und Sicherheitskonzepten mit intersektionalem Ansatz.',
@@ -473,7 +485,8 @@ EXECUTE FUNCTION update_phase_progress();
                     '2024-02-15', '2024-08-10', '2024-03-10', NULL, NOW(),
                     (SELECT id FROM project_priority ORDER BY random() LIMIT 1),
                     (SELECT id FROM project_status ORDER BY random() LIMIT 1),
-                    (SELECT id FROM methodology ORDER BY random() LIMIT 1)),
+                    (SELECT id FROM methodology ORDER BY random() LIMIT 1),
+                    NULL),
 
                    ('Open-Source Plattform für Inklusion',
                     'Eine Plattform zur Förderung von barrierefreien Open-Source-Projekten.',
@@ -481,7 +494,8 @@ EXECUTE FUNCTION update_phase_progress();
                     '2024-01-20', '2024-07-01', '2024-02-01', '2024-06-15', NOW(),
                     (SELECT id FROM project_priority ORDER BY random() LIMIT 1),
                     (SELECT id FROM project_status ORDER BY random() LIMIT 1),
-                    (SELECT id FROM methodology ORDER BY random() LIMIT 1)),
+                    (SELECT id FROM methodology ORDER BY random() LIMIT 1)
+                   ,'2c78d5af-9b6f-4423-a189-836a0bce388c'),
 
                    ('Agiles Barrierefreiheitsmanagement',
                     'Integration agiler Methoden zur nachhaltigen Barrierefreiheit in der IT.',
@@ -489,7 +503,8 @@ EXECUTE FUNCTION update_phase_progress();
                     '2024-06-10', '2025-02-20', NULL, NULL, NOW(),
                     (SELECT id FROM project_priority ORDER BY random() LIMIT 1),
                     (SELECT id FROM project_status ORDER BY random() LIMIT 1),
-                    (SELECT id FROM methodology ORDER BY random() LIMIT 1));
+                    (SELECT id FROM methodology ORDER BY random() LIMIT 1),
+                    Null);
 
         `)
         await queryRunner.query(`
@@ -507,49 +522,49 @@ EXECUTE FUNCTION update_phase_progress();
             ON CONFLICT (name) DO NOTHING;
 
 
-            INSERT INTO project_phase ("nameId", progress, "plannedStartDate", "plannedEndDate", "actualStartDate",
+            INSERT INTO project_phase (id, "nameId", progress, "plannedStartDate", "plannedEndDate", "actualStartDate",
                                        "actualEndDate", "projectId", "phaseStatusId")
-            VALUES ((SELECT id FROM phase_name WHERE name = 'Kickoff & Kuchen' LIMIT 1),
+            VALUES ('bb11e16d-02c3-4483-b4b2-63689f2eee05',(SELECT id FROM phase_name WHERE name = 'Kickoff & Kuchen' LIMIT 1),
                     0, NOW(), NOW() + INTERVAL '10 days', NULL, NULL,
                     (SELECT id FROM project ORDER BY random() LIMIT 1),
                     (SELECT id FROM phase_status WHERE name = 'Geplant' LIMIT 1)),
 
-                   ((SELECT id FROM phase_name WHERE name = 'Research & Ranting' LIMIT 1),
+                   ('6e0a8ffd-a681-498f-b772-fced47a3e768',(SELECT id FROM phase_name WHERE name = 'Research & Ranting' LIMIT 1),
                     10, NOW(), NOW() + INTERVAL '15 days', NULL, NULL,
                     (SELECT id FROM project ORDER BY random() LIMIT 1),
                     (SELECT id FROM phase_status WHERE name = 'Gestartet' LIMIT 1)),
 
-                   ((SELECT id FROM phase_name WHERE name = 'Prototyping & Patriarchy-Hacking' LIMIT 1),
+                   ('8133ba4c-c7bc-4757-b7dc-5c5ffe02f1d1',(SELECT id FROM phase_name WHERE name = 'Prototyping & Patriarchy-Hacking' LIMIT 1),
                     20, NOW(), NOW() + INTERVAL '20 days', NULL, NULL,
                     (SELECT id FROM project ORDER BY random() LIMIT 1),
                     (SELECT id FROM phase_status WHERE name = 'In Bearbeitung' LIMIT 1)),
 
-                   ((SELECT id FROM phase_name WHERE name = 'Coding & Care Work' LIMIT 1),
+                   ('6f399d98-b37f-4931-8849-7b6a0aafa5ac',(SELECT id FROM phase_name WHERE name = 'Coding & Care Work' LIMIT 1),
                     40, NOW(), NOW() + INTERVAL '30 days', NULL, NULL,
                     (SELECT id FROM project ORDER BY random() LIMIT 1),
                     (SELECT id FROM phase_status WHERE name = 'In Bearbeitung' LIMIT 1)),
 
-                   ((SELECT id FROM phase_name WHERE name = 'Debugging & Deep Talks' LIMIT 1),
+                   ('ea2572f7-5e62-4848-8c1f-85f5ca826234',(SELECT id FROM phase_name WHERE name = 'Debugging & Deep Talks' LIMIT 1),
                     60, NOW(), NOW() + INTERVAL '25 days', NULL, NULL,
                     (SELECT id FROM project ORDER BY random() LIMIT 1),
                     (SELECT id FROM phase_status WHERE name = 'In Review' LIMIT 1)),
 
-                   ((SELECT id FROM phase_name WHERE name = 'Testing & Tea Time' LIMIT 1),
+                   (gen_random_uuid(),(SELECT id FROM phase_name WHERE name = 'Testing & Tea Time' LIMIT 1),
                     75, NOW(), NOW() + INTERVAL '10 days', NULL, NULL,
                     (SELECT id FROM project ORDER BY random() LIMIT 1),
                     (SELECT id FROM phase_status WHERE name = 'Freigabe ausstehend' LIMIT 1)),
 
-                   ((SELECT id FROM phase_name WHERE name = 'Deployment & Dance Party' LIMIT 1),
+                   (gen_random_uuid(),(SELECT id FROM phase_name WHERE name = 'Deployment & Dance Party' LIMIT 1),
                     90, NOW(), NOW() + INTERVAL '7 days', NULL, NULL,
                     (SELECT id FROM project ORDER BY random() LIMIT 1),
                     (SELECT id FROM phase_status WHERE name = 'Freigegeben' LIMIT 1)),
 
-                   ((SELECT id FROM phase_name WHERE name = 'Maintenance & Memes' LIMIT 1),
+                   (gen_random_uuid(),(SELECT id FROM phase_name WHERE name = 'Maintenance & Memes' LIMIT 1),
                     95, NOW(), NOW() + INTERVAL '20 days', NULL, NULL,
                     (SELECT id FROM project ORDER BY random() LIMIT 1),
                     (SELECT id FROM phase_status WHERE name = 'Abgeschlossen' LIMIT 1)),
 
-                   ((SELECT id FROM phase_name WHERE name = 'Celebration & Salary Negotiation' LIMIT 1),
+                   (gen_random_uuid(),(SELECT id FROM phase_name WHERE name = 'Celebration & Salary Negotiation' LIMIT 1),
                     100, NOW(), NOW() + INTERVAL '5 days', NULL, NULL,
                     (SELECT id FROM project ORDER BY random() LIMIT 1),
                     (SELECT id FROM phase_status WHERE name = 'Archiviert' LIMIT 1));
@@ -570,22 +585,15 @@ EXECUTE FUNCTION update_phase_progress();
             INSERT
             INTO document (title, content, "createdAt", "projectId", "phaseId", "activityId")
             VALUES ('Technische Spezifikation',
-                    '**1. Einführung**
-                    \nDieses Dokument beschreibt die technischen Anforderungen und Architekturentscheidungen des Systems.
-                    \n
-                    **2. Systemübersicht**
-                    \nDas System besteht aus einer Microservices-Architektur mit einer PostgreSQL-Datenbank, einer Node.js-Backend-API und einem Angular-Frontend.
-                    \n
-                    **3. Datenmodell**
-                    \nDie Kernentitäten sind User, Projects und Tasks. Details zu den Tabellenstrukturen sind in Kapitel 4 beschrieben.
-                    \n
-                    **4. API-Spezifikation** 
-                    \n* POST /users - Erstellt einen neuen Benutzer
-                    \n* GET /projects - Listet alle Projekte auf
-                    \n* PATCH /tasks/:id - Aktualisiert den Status einer Aufgabe
-                    \n
-                    **5. Skalierbarkeit und Performance**
-                    \nDas System verwendet Load Balancing über Nginx und Caching mit Redis.', NOW(),
+                    '#1. Einführung
+\nDieses Dokument beschreibt die technischen Anforderungen und Architekturentscheidungen des Systems.\n
+# 2. Systemübersicht
+\nDas System besteht aus einer Microservices-Architektur mit einer PostgreSQL-Datenbank, einer Node.js-Backend-API und einem Angular-Frontend.\n
+# 3. Datenmodell\nDie Kernentitäten sind User, Projects und Tasks. Details zu den Tabellenstrukturen sind in Kapitel 4 beschrieben.\n
+# 4. API-Spezifikation 
+\n* POST /users - Erstellt einen neuen Benutzer
+\n* GET /projects - Listet alle Projekte auf\n* PATCH /tasks/:id - Aktualisiert den Status einer Aufgabe\n
+# 5. Skalierbarkeit und Performance\nDas System verwendet Load Balancing über Nginx und Caching mit Redis.', NOW(),
                     (SELECT id
                      FROM project_ids
                      WHERE methodology_id = (SELECT id FROM methodology_ids WHERE name LIKE 'IPMA%')

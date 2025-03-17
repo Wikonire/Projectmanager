@@ -1,6 +1,8 @@
 import {Column, Entity, JoinColumn, ManyToMany, OneToMany, OneToOne, PrimaryGeneratedColumn} from 'typeorm';
 import {EmployeePmFunction} from './employee-pm-function.entity';
 import {UserEntity} from './user.entity';
+import {Document} from './document.entity';
+import {ProjectEntity} from './project.entity';
 
 @Entity('employee')
 export class EmployeeEntity {
@@ -15,6 +17,9 @@ export class EmployeeEntity {
 
     @Column({type: 'timestamp', default: () => 'CURRENT_TIMESTAMP'})
     created_at: Date;
+
+    @OneToMany(() => ProjectEntity, (project) => project.leader, { cascade: true, eager: true, nullable: true })
+    projectsToLead: ProjectEntity[];
 
     @OneToOne(() => UserEntity, (user) => user.employee)
     @JoinColumn({ name: 'userId' })

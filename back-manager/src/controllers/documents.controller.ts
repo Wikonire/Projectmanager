@@ -27,6 +27,7 @@ export class DocumentsController {
     //@Roles(Role.Admin, Role.ProjectLeader, Role.ProjectOwner)
     @Put(':id')
     update(@Param('id') id: string, @Body() updateDocumentDto: UpdateDocumentDto) {
+        console.log(updateDocumentDto)
         return this.documentsService.update(id, updateDocumentDto);
     }
 

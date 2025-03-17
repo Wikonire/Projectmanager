@@ -19,3 +19,17 @@ export class CreateUserDto {
 }
 
 export class UpdateUserDto extends PartialType(CreateUserDto) {}
+
+export class UserResponseDto  {
+    @IsUUID()
+    id: string;
+
+    @IsString()
+    role: string;
+
+    @IsString()
+    email: string;
+
+    @IsString()
+    username: string;
+}

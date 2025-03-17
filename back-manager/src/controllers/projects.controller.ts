@@ -6,7 +6,7 @@ import {
     Param,
     Delete,
     Patch,
-    BadRequestException, HttpCode, NotFoundException
+    BadRequestException, HttpCode, NotFoundException, Put
 } from '@nestjs/common';
 import {ProjectService} from '../repositories/project.service';
 import {ProjectEntity} from '../entities/project.entity';
@@ -39,7 +39,7 @@ export class ProjectsController {
         return this.projectsService.create(createProjectDto);
     }
 
-    @Patch(':id')
+    @Put(':id')
     @HttpCode(204)
     async update(@Param('id') id: string, @Body() updateProjectDto: Partial<UpdateProjectDto>): Promise<void> {
         console.log(

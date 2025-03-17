@@ -29,9 +29,10 @@ export class DocumentsService {
         return await this.documentRepository.save(document);
     }
 
-    async update(id: string, updateDocumentDto: UpdateDocumentDto): Promise<Document> {
+    async update(id: string, updateDocumentDto: CreateDocumentDto): Promise<Document> {
         const document = await this.documentRepository.preload({ id, ...updateDocumentDto });
-
+        console.log("updateDocumentDto")
+        console.log(updateDocumentDto)
         if (!document) {
             throw new NotFoundException(`Dokument mit ID ${id} nicht gefunden`);
         }

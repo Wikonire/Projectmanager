@@ -1,4 +1,11 @@
-import { IsString, IsUUID, IsOptional, IsNotEmpty } from 'class-validator';
+import {IsString, IsUUID, IsOptional, IsNotEmpty, IsDateString, ValidateNested} from 'class-validator';
+import {ResponseProjectDto} from './project.dto';
+import {ProjectPhaseDto} from './project-phase.dto';
+import {CreateActivityDto, ResponseActivityDto} from './activity.dto';
+import {Type} from 'class-transformer';
+import {ActivityEntity} from '../entities/activity.entity';
+import {ProjectEntity} from '../entities/project.entity';
+import {ProjectPhase} from '../entities/project-phase.entity';
 
 export class CreateDocumentDto {
     @IsString()
@@ -6,20 +13,29 @@ export class CreateDocumentDto {
     title: string;
 
     @IsString()
-    @IsNotEmpty()
-    file_path: string;
+    content: string;
+
+    @IsDateString()
+    createdAt: string;
+
+
+    @IsString()
+    @IsOptional()
+    path?: string;
 
     @IsOptional()
-    @IsUUID()
-    projectId?: string | undefined;
+    @Type(() => ResponseProjectDto)
+    project?: ResponseProjectDto;
 
     @IsOptional()
-    @IsUUID()
-    phase_id?: string | undefined;
+    @Type(() => ProjectPhaseDto)
+    phase?: ProjectPhaseDto;
 
     @IsOptional()
-    @IsUUID()
-    activity_id?: string | undefined;
+    @Type(() => ResponseActivityDto)
+    activity?: ResponseActivityDto;
+
+
 }
 
 export class UpdateDocumentDto extends CreateDocumentDto {}

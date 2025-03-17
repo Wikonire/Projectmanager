@@ -21,7 +21,7 @@ export class ProjectService {
 
     async findAllActive(): Promise<ProjectEntity[]> {
         return this.projectRepository.find({
-            relations: ['priority', 'status', 'methodology', 'projectPhases', 'documents', 'projectPhases.phaseName'],
+            relations: ['priority', 'status', 'methodology', 'projectPhases', 'documents', 'projectPhases.phaseName','leader', 'projectPhases.activities' ],
             order: { title: 'ASC' },
             where: { status: { name: Not('Archiviert') } }
         });
@@ -29,7 +29,7 @@ export class ProjectService {
 
     async findAllArchived(): Promise<ProjectEntity[]> {
         return this.projectRepository.find({
-            relations: ['priority', 'status', 'methodology', 'projectPhases.phaseName'],
+            relations: ['priority', 'status', 'methodology', 'projectPhases.phaseName', 'leader'],
             order: { title: 'ASC' },
             where: { status: { name: 'Archiviert' } }
         });
@@ -38,8 +38,9 @@ export class ProjectService {
     async findOne(id: string): Promise<ProjectEntity> {
         const project = await this.projectRepository.findOne({
             where: { id },
-            relations: ['priority', 'status', 'methodology', 'projectPhases', 'documents', 'projectPhases.phaseName'],
+            relations: ['priority', 'status', 'methodology', 'projectPhases', 'documents', 'projectPhases.phaseName', 'leader'],
         });
+        console.log('Projekt:', project);
 
         if (!project) throw new NotFoundException(`Projekt mit ID ${id} nicht gefunden`);
 

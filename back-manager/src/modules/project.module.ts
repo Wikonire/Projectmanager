@@ -41,6 +41,8 @@ import {AuthService} from '../auth/auth.service';
 import {JwtStrategy} from '../auth/jwt.strategy';
 import {RoleService} from '../repositories/role.service';
 import {StatusNameController} from '../controllers/status-name.controller';
+import {EmployeesController} from '../controllers/employee.controller';
+import {EmployeesService} from '../repositories/employees.service';
 
 @Module({
     controllers: [
@@ -55,6 +57,7 @@ import {StatusNameController} from '../controllers/status-name.controller';
         UsersController,
         RolesController,
         StatusNameController,
+        EmployeesController
     ],
     imports: [
         ConfigModule, // Stellt sicher, dass ConfigService verfügbar ist
@@ -86,6 +89,9 @@ import {StatusNameController} from '../controllers/status-name.controller';
             PhaseName,
             UserEntity,
             RoleEntity,
+            EmployeeEntity,
+            EmployeePmFunction,
+            PmFunction,
         ])
     ],
     exports: [TypeOrmModule, JwtModule],
@@ -100,7 +106,8 @@ import {StatusNameController} from '../controllers/status-name.controller';
         PhaseNameService,
         AuthService,
         JwtStrategy,
-        RoleService
+        RoleService,
+        EmployeesService
     ]
 })
 export class ProjectModule {}

@@ -2,10 +2,9 @@ import {
     BeforeInsert,
     Column,
     Entity,
-    JoinColumn,
     JoinTable,
     ManyToMany,
-    ManyToOne, OneToMany, OneToOne,
+    OneToOne,
     PrimaryGeneratedColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';

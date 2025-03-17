@@ -3,6 +3,7 @@ import {Max, Min} from 'class-validator';
 import {ProjectPhase} from './project-phase.entity';
 import {ActivityStatusEntity} from './activity-status.entity';
 import {Document} from './document.entity';
+import {EmployeeEntity} from './employee.entity';
 
 @Entity('activity')
 export class ActivityEntity {
@@ -28,6 +29,10 @@ export class ActivityEntity {
     @Min(0)
     @Max(100)
     progress: number;
+
+    @ManyToOne(() => EmployeeEntity, { onDelete: 'SET NULL', nullable: true })
+    @JoinColumn({ name: 'responsible_employee_id' })
+    responsibleEmployee?: EmployeeEntity;
 
     @Column('smallint')
     estimation: number;

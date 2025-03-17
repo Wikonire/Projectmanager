@@ -1,24 +1,12 @@
-import {
-    IsString,
-    IsUUID,
-    IsOptional,
-    IsDate,
-    IsDecimal,
-    ValidateNested,
-    IsBoolean,
-    Min,
-    Max,
-    IsDateString
-} from 'class-validator';
-import { Type } from 'class-transformer';
-import { PartialType } from '@nestjs/mapped-types';
+import {IsDateString, IsDecimal, IsOptional, IsString, Max, Min, ValidateNested} from 'class-validator';
+import {Type} from 'class-transformer';
+import {PartialType} from '@nestjs/mapped-types';
 
 import {ProjectPhaseDto} from './project-phase.dto';
-import { ProjectStatusDto } from './project-status.dto';
+import {ProjectStatusDto} from './project-status.dto';
 import {CreateMethodologyDto} from '../repositories/methodology.service';
-import {MethodologyEntity} from '../entities/methodology.entity';
 import {ProjectPriorityDto} from './project-priority.dto';
-import {ProjectPhase} from '../entities/project-phase.entity';
+import {CreateDocumentDto} from './document.dto';
 
 export class CreateProjectDto {
     @IsString()
@@ -47,6 +35,11 @@ export class CreateProjectDto {
     plannedEndDate?: Date;
 
     @IsOptional()
+    @ValidateNested({ each: true })
+    @Type(() => CreateDocumentDto)
+    documents?: CreateDocumentDto[];
+
+    @IsOptional()
     @IsDateString()
     actualStartDate?: Date;
 
@@ -67,7 +60,8 @@ export class CreateProjectDto {
     phases?: ProjectPhaseDto[];
 }
 
-export class UpdateProjectDto extends PartialType(CreateProjectDto) {}
+export class UpdateProjectDto extends PartialType(CreateProjectDto) {
+}
 
 
 export class ResponseProjectDto extends PartialType(CreateProjectDto) {

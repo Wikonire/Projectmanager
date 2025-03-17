@@ -4,6 +4,7 @@ import { ProjectEntity } from './project.entity';
 import { PhaseStatus } from './phase-status.entity';
 import {PhaseName} from './phase-name.entity';
 import {Document} from './document.entity';
+import {ActivityEntity} from './activity.entity';
 
 @Entity('project_phase')
 export class ProjectPhase {
@@ -18,6 +19,9 @@ export class ProjectPhase {
     @ManyToOne(() => ProjectEntity, { onDelete: 'SET NULL' })
     @JoinColumn({ name: 'projectId' })
     project: ProjectEntity;
+
+    @OneToMany(() => ActivityEntity, (activity) => activity.phase, { cascade: true, nullable: true })
+    activities: ProjectPhase[];
 
     @ManyToOne(() => PhaseStatus, { nullable: true, onDelete: 'SET NULL' })
     @JoinColumn({ name: 'phaseStatusId' })
