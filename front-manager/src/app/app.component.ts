@@ -15,39 +15,13 @@ import {User} from '../shared/interfaces/user.model';
 import localeDeCh from '@angular/common/locales/de-CH';
 import {MatNativeDateModule} from '@angular/material/core';
 import {EmployeeListModule} from './employee-list/employee-list.module';
-import {
-  GanttItem,
-  NgxGanttComponent,
-  NgxGanttModule,
-  NgxGanttTableColumnComponent,
-  NgxGanttTableComponent
-} from '@worktile/gantt';
 import {GanttModule} from './gantt/gantt.module';
 
 registerLocaleData(localeDeCh);
 
 @Component({
   selector: 'app-root',
-  imports: [
-    RouterOutlet,
-    CommonModule,
-    RouterOutlet,
-    MatMenuModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
-    RouterLink,
-    NgOptimizedImage,
-    HomeModule,
-    LoginModule,
-    ProjectListModule,
-    ProjectDetailModule,
-    RouterLinkActive,
-    StartModule,
-    MatNativeDateModule,
-    EmployeeListModule,
-    GanttModule
-  ],
+  imports: [RouterOutlet, CommonModule, RouterOutlet, MatMenuModule, MatToolbarModule, MatButtonModule, MatIconModule, RouterLink, NgOptimizedImage, HomeModule, LoginModule, ProjectListModule, ProjectDetailModule, RouterLinkActive, StartModule, MatNativeDateModule, EmployeeListModule, GanttModule],
   templateUrl: './app.component.html',
   standalone: true,
   styleUrl: './app.component.scss'
